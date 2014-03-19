@@ -1,4 +1,4 @@
-package fr.epsi.projetricochetrobot;
+package main.java.fr.epsi.projetricochetrobot;
 
 public class Case {
 	
