@@ -2,13 +2,14 @@ package fr.epsi.projetricochetrobot;
 
 public class Field {
 	
-	int nbRound;
-	boolean isFinished;
+	private int nbRound;
+	private boolean isFinished;
 	private Case casefield[];
 	
 	public Field()
 	{
 		this.nbRound = 0;
+		this.isFinished = false;		
 		this.casefield = new Case[256];
 		for(int i=0;i<casefield.length;i++)
 		{
@@ -17,7 +18,6 @@ public class Field {
 			else
 				this.casefield[i] = new Case(i,false);
 		}
-		this.isFinished = false;
 	}
 	
 	public void incrementNbRound()
