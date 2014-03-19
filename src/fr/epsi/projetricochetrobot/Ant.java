@@ -4,5 +4,5 @@ import java.util.List;
 
 public class Ant {
 	private List<Case> path;
-	private int nbMoveLeft;
+	private int nbMoveLeft = Constant.nbMove;
 }
