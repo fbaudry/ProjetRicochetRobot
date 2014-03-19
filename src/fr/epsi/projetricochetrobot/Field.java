@@ -4,9 +4,21 @@ public class Field {
 	
 	int nbRound;
 	boolean isFinished;
+	private Case casefield[];
 	
-	
-	
+	public Field()
+	{
+		this.nbRound = 0;
+		this.casefield = new Case[256];
+		for(int i=0;i<casefield.length;i++)
+		{
+			if(i == Constant.targetNumCase)
+				this.casefield[i] =  new Case(i,true);
+			else
+				this.casefield[i] = new Case(i,false);
+		}
+		this.isFinished = false;
+	}
 	
 	public void incrementNbRound()
 	{
