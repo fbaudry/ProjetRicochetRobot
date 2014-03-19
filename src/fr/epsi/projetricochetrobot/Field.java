@@ -16,6 +16,7 @@ public class Field {
 		this.nbRound = 0;
 		this.isFinished = false;		
 		this.casefield = new Case[256];
+		
 		for(int i=0;i<casefield.length;i++)
 		{
 			if(i == Constant.targetNumCase)
