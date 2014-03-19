@@ -2,11 +2,16 @@ package fr.epsi.projetricochetrobot;
 
 public class Field {
 	
-	private int nbRound;
-	private boolean isFinished;
-	private Case casefield[];
+	public static int nbRound;
+	public static boolean isFinished;
+	public static Case casefield[];
 	
-	public Field()
+	private Field()
+	{
+		
+	}
+
+	public void initField()
 	{
 		this.nbRound = 0;
 		this.isFinished = false;		
@@ -35,7 +40,7 @@ public class Field {
 		return this.nbRound;
 	}
 	
-	public void isFinished(boolean isFinished)
+	public void setIsFinished(boolean isFinished)
 	{
 		this.isFinished = isFinished;
 	}
