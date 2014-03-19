@@ -6,10 +6,7 @@ public class Field {
 	public static boolean isFinished;
 	public static Case casefield[];
 	
-	private Field()
-	{
-		
-	}
+	private Field(){}
 
 	public void initField()
 	{
