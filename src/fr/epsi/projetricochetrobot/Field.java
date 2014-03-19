@@ -2,11 +2,8 @@ package fr.epsi.projetricochetrobot;
 
 public class Field {
 	
-	int nbRound;
-	boolean isFinished;
-	
-	
-	
+	private int nbRound;
+	private boolean isFinished;
 	
 	public void incrementNbRound()
 	{
