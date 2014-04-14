@@ -101,13 +101,13 @@ public class Case extends Panel{
 			super.setY(22+480);
 			//on affiche l'image
 			super.drawImage();
-		}else if(caseNumber==244){
+		}else if(caseNumber>=241 && caseNumber<=254){
 			//si c'est la case d'en bas à gauche
 			this.walls[2] = true;
 			this.walls[1] = true;
 			super.setFile(new File("./img/floor_right_bottom.png"));
 			//on definit sa position
-			super.setX(480);
+			super.setX(50);
 			super.setY(22+480);
 			//on affiche l'image
 			super.drawImage();
