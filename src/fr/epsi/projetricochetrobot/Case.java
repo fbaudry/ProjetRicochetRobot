@@ -16,15 +16,43 @@ public class Case extends Panel{
 	private boolean target;
 	
 	//-----------------------Contructeur
-	public Case(int caseNumber, boolean target, Graphics g) {
+	public Case(int caseNumber, Graphics g) {
 		super(g);
 		this.caseNumber = caseNumber;
 		this.target = target;
 		
 		System.out.println(caseNumber);
 		
+		if(caseNumber == 0){
+			this.walls[0] = true;
+			this.walls[3] = true;
+			super.setFile(new File("./img/floor_top_left.png"));
+			super.setX(0);
+			super.setY(0);
+			super.drawImage();
+		}
+		
+		if(caseNumber > 0 && caseNumber < 15){
+			this.walls[0] = true;
+			super.setFile(new File("./img/floor_top.png"));
+			super.setX(caseNumber*32);
+			super.setY(0);
+			super.drawImage();
+		}
+		
+		if(caseNumber == 16){
+			this.walls[0] = true;
+			this.walls[1] = true;
+			super.setFile(new File("./img/floor_top.png"));
+			super.setX(caseNumber*32);
+			super.setY(0);
+			super.drawImage();
+		}
+		
+		
+		
 		// Case du contour avec les bordures 
-		if(caseNumber==0){
+		/*if(caseNumber==0){
 			//si c'est la case de l'angle en haut à gauche
 			this.walls[0] = true;
 			this.walls[3] = true;
@@ -85,7 +113,7 @@ public class Case extends Panel{
 			super.drawImage();
 			System.out.println("test");
 		}
-		
+		*/
 		// Les 4 cases du centre
 		if(caseNumber == 119){
 			//haut et gauche

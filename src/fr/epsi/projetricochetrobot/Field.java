@@ -15,11 +15,14 @@ public class Field extends Window{
 	
 	protected Field(){
 		super();
+		
 	}
 
 	public static Field getInstance() {
 		if(instance == null) {
 			instance = new Field();
+
+			
 		}
 		return instance;
 	}
@@ -33,9 +36,9 @@ public class Field extends Window{
 		for(int i=0;i<casefield.length;i++)
 		{
 			if(i == Constant.targetNumCase)
-				this.casefield[i] =  new Case(i, true, super.getGraphics());
+				this.casefield[i] =  new Case(i, super.getGraphics());
 			else
-				this.casefield[i] = new Case(i, false, super.getGraphics());
+				this.casefield[i] = new Case(i, super.getGraphics());
 		}
 	}
 	
