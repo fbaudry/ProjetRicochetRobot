@@ -13,13 +13,26 @@ public class Case extends Panel{
 	private int caseNumber;
 	private boolean[] walls = {false, false, false, false};	//permet de définir quel coté est un mur ----> 0->haut; 1->droite; 2->bas; 3->gauche
 	private int pheronomeLevel = 0;
+	
+	public boolean isStarter() {
+		return starter;
+	}
+
+	public void setStarter(boolean starter) {
+		this.starter = starter;
+	}
+
+	public void setTarget(boolean target) {
+		this.target = target;
+	}
+
 	private boolean target;
+	private boolean starter;
 	
 	//-----------------------Contructeur
-	public Case(int caseNumber, boolean target, Graphics g) {
+	public Case(int caseNumber, Graphics g) {
 		super(g);
 		this.caseNumber = caseNumber;
-		this.target = target;
 		
 		System.out.println(caseNumber);
 		

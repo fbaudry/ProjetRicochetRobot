@@ -32,11 +32,9 @@ public class Field extends Window{
 		
 		for(int i=0;i<casefield.length;i++)
 		{
-			if(i == Constant.targetNumCase)
-				this.casefield[i] =  new Case(i, true, super.getGraphics());
-			else
-				this.casefield[i] = new Case(i, false, super.getGraphics());
+			this.casefield[i] =  new Case(i, super.getGraphics());
 		}
+		initStarterAndTarget();
 	}
 	
 	public void incrementNbRound()
@@ -63,7 +61,18 @@ public class Field extends Window{
 	{
 		return this.finished;
 	}
-
 	
+	public void initStarterAndTarget()
+	{
+		int numberCaseStarter = (int)(Math.random() * (256));
+		
+		int numberCaseTarget = (int)(Math.random() * (256));
+		while(numberCaseTarget == numberCaseStarter)
+		{
+			numberCaseTarget = (int)(Math.random() * (256));
+		}
+		this.casefield[numberCaseStarter].setStarter(true);
+		this.casefield[numberCaseTarget].setTarget(true);
+	}
 
 }
