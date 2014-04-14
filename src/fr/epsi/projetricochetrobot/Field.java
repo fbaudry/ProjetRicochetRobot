@@ -2,9 +2,7 @@ package fr.epsi.projetricochetrobot;
 
 public class Field extends Window{
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private static Field instance = null;
