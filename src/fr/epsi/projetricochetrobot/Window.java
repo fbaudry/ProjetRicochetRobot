@@ -1,7 +1,7 @@
 package fr.epsi.projetricochetrobot;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
@@ -10,9 +10,8 @@ public class Window extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Graphics graphics;
-
-	public Window() {
+	
+	public Window() throws HeadlessException {
 		// affectation du titre et de l'icône
 		this.setTitle("Ricochet Robot");
 		//this.frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Appli0.class.getResource("/icone.gif")));
@@ -26,11 +25,5 @@ public class Window extends JFrame {
 	    // leur preferredSize, ou au dessus
 	    this.pack();
 	    this.setVisible(true);
-	    graphics = this.getGraphics();
 	}
-
-	public Graphics getGraphics() {
-		return graphics;
-	}
-
 }

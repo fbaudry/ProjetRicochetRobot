@@ -1,25 +1,41 @@
 package fr.epsi.projetricochetrobot;
 
-public class Field {
+public class Field extends Window{
 	
-	public static int nbRound;
-	public static boolean isFinished;
-	public static Case casefield[];
-	
-	private Field(){}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	public void initField()
+	private static Field instance = null;
+	
+	public int nbRound;
+	public boolean finished;
+	public Case casefield[];
+	
+	protected Field(){
+		super();
+	}
+
+	public static Field getInstance() {
+		if(instance == null) {
+			instance = new Field();
+		}
+		return instance;
+	}
+	
+	public void init()
 	{
 		this.nbRound = 0;
-		this.isFinished = false;		
+		this.finished = false;		
 		this.casefield = new Case[256];
 		
 		for(int i=0;i<casefield.length;i++)
 		{
 			if(i == Constant.targetNumCase)
-				this.casefield[i] =  new Case(i,true);
+				this.casefield[i] =  new Case(i, true, super.getGraphics());
 			else
-				this.casefield[i] = new Case(i,false);
+				this.casefield[i] = new Case(i, false, super.getGraphics());
 		}
 	}
 	
@@ -38,14 +54,14 @@ public class Field {
 		return this.nbRound;
 	}
 	
-	public void setIsFinished(boolean isFinished)
+	public void setFinished(boolean finished)
 	{
-		this.isFinished = isFinished;
+		this.finished = finished;
 	}
 	
-	public boolean getIsFinished()
+	public boolean isFinished()
 	{
-		return this.isFinished;
+		return this.finished;
 	}
 	
 
