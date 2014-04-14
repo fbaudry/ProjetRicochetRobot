@@ -12,7 +12,7 @@ public class Ant {
 	public Ant()
 	{
 		this.path = new ArrayList<Case>();
-		this.path.add(Field.casefield[Constant.startNumCase]);
+		this.path.add(Field.getInstance().casefield[Constant.startNumCase]);
 	}
 	
 	public void move()
@@ -25,7 +25,7 @@ public class Ant {
 		
 		// Vérifier si la foumi est sur la case cible
 		if(this.getAntPosition().isTarget())
-			Field.isFinished = false;
+			Field.getInstance().setFinished(false);
 	}
 	
 	public Case getCaseToMove()
@@ -37,9 +37,9 @@ public class Ant {
 		{
 			// Vérifier si il n'y a pas de bordure à gauche sur la case actuelle
 			// Vérifier si il n'y a pas de bordure droite sur la case à gauche
-			if(this.getAntPosition().getWall(3) == false && Field.casefield[this.getAntPosition().getCaseNumber()-1].getWall(1) == false)
+			if(this.getAntPosition().getWall(3) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-1].getWall(1) == false)
 			{
-				cases.add(Field.casefield[this.getAntPosition().getCaseNumber()-1]);	
+				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-1]);	
 			}
 		}
 			
@@ -49,9 +49,9 @@ public class Ant {
 		{
 			// Vérifier si il n'y a pas de bordure a droite sur la case actuelle
 			// Vérifier si il n'y a pas de bordure gauche sur la case à droite
-			if(this.getAntPosition().getWall(1) == false && Field.casefield[this.getAntPosition().getCaseNumber()+1].getWall(3) == false)
+			if(this.getAntPosition().getWall(1) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+1].getWall(3) == false)
 			{
-				cases.add(Field.casefield[this.getAntPosition().getCaseNumber()+1]);	
+				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+1]);	
 			}			
 		}
 		
@@ -60,9 +60,9 @@ public class Ant {
 		{
 			// Vérifier si il n'y a pas de bordure en haut sur la case actuelle
 			// Vérifier si il n'y a pas de bordure en bas sur la case en haut
-			if(this.getAntPosition().getWall(0) == false && Field.casefield[this.getAntPosition().getCaseNumber()-16].getWall(2) == false)
+			if(this.getAntPosition().getWall(0) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-16].getWall(2) == false)
 			{
-				cases.add(Field.casefield[this.getAntPosition().getCaseNumber()-16]);
+				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-16]);
 			}
 		}
 			
@@ -72,9 +72,9 @@ public class Ant {
 		{
 			// Vérifier si il n'y a pas de bordure en bas sur la case actuelle
 			// Vérifier si il n'y a pas de bordure en haut sur la case en bas
-			if(this.getAntPosition().getWall(2) == false && Field.casefield[this.getAntPosition().getCaseNumber()+16].getWall(0) == false)
+			if(this.getAntPosition().getWall(2) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+16].getWall(0) == false)
 			{
-				cases.add(Field.casefield[this.getAntPosition().getCaseNumber()+16]);
+				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+16]);
 			}
 		}
 			
