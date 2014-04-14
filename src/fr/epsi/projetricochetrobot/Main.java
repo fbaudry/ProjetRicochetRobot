@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 public class Main {
 
 	public static void main(String[] args) {
+		
 		// création de l'application
 		JFrame f = new JFrame();
 		// affectation du titre et de l'icône

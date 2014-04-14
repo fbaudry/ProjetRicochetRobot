@@ -50,6 +50,7 @@ public class Field {
 	{
 		return this.isFinished;
 	}
+
 	
 
 }

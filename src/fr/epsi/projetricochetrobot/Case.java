@@ -43,10 +43,26 @@ public class Case {
 		}else if(caseNumber == 137){
 			this.walls[2] = true;
 			this.walls[3] = true;
-		}
-			
-		
+		}		
 	}
 	
+	public boolean isTarget()
+	{
+		return target;
+	}
 	
+	public int getCaseNumber()
+	{
+		return caseNumber;
+	}
+	
+	public boolean getWall(int border)
+	{
+		if(border > 0 && border < 3)
+		{
+			return this.walls[border];
+		}
+		
+		return true;
+	}
 }
