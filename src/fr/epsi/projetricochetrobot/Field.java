@@ -63,6 +63,7 @@ public class Field extends Window{
 	{
 		return this.finished;
 	}
+
 	
 
 }

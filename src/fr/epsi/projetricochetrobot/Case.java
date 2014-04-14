@@ -103,6 +103,27 @@ public class Case extends Panel{
 			//bas et gauche
 			this.walls[2] = true;
 			this.walls[3] = true;
-		}
+		}		
 	}
+	
+	public boolean isTarget()
+	{
+		return target;
+	}
+	
+	public int getCaseNumber()
+	{
+		return caseNumber;
+	}
+	
+	public boolean getWall(int border)
+	{
+		if(border > 0 && border < 3)
+		{
+			return this.walls[border];
+		}
+		
+		return true;
+	}
+
 }
