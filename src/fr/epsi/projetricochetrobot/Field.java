@@ -11,6 +11,9 @@ public class Field extends Window{
 	public boolean finished;
 	public Case casefield[];
 	
+	private Case starter = null;
+	private Case target = null;
+	
 	protected Field(){
 		super();
 	}
@@ -29,10 +32,15 @@ public class Field extends Window{
 		this.casefield = new Case[256];
 		
 		for(int i=0;i<casefield.length;i++)
-		{
 			this.casefield[i] =  new Case(i, super.getGraphics());
-		}
+		
 		initStarterAndTarget();
+		
+		
+		for(int i = 0; i < Constant.nbAnt; i++){
+			Ant ant = new Ant(starter);
+			
+		}
 	}
 	
 	public void incrementNbRound()
@@ -71,6 +79,9 @@ public class Field extends Window{
 		}
 		this.casefield[numberCaseStarter].setStarter(true);
 		this.casefield[numberCaseTarget].setTarget(true);
+		
+		starter = this.casefield[numberCaseStarter];
+		target = this.casefield[numberCaseTarget];
 	}
 
 }
