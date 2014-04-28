@@ -25,6 +25,9 @@ public class Field extends Window{
 	public Map<Integer, Case> cases;
 	public Case[] casefield;
 	
+	private Case starter = null;
+	private Case target = null;
+	
 	protected Field(){
 		super();
 	}
@@ -115,6 +118,9 @@ public class Field extends Window{
 		}
 		this.casefield[numberCaseStarter].setStarter(true);
 		this.casefield[numberCaseTarget].setTarget(true);
+		
+		starter = this.casefield[numberCaseStarter];
+		target = this.casefield[numberCaseTarget];
 	}
 
 }

@@ -9,10 +9,10 @@ public class Ant {
 	private int nbMoveLeft = Constant.nbMove;
 	
 	
-	public Ant()
+	public Ant(Case starter)
 	{
 		this.path = new ArrayList<Case>();
-		this.path.add(Field.getInstance().casefield[256]);
+		this.path.add(starter);
 	}
 	
 	public void move()
