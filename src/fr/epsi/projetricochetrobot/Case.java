@@ -27,122 +27,22 @@ public class Case extends Panel{
 	private boolean target;
 	private boolean starter;
 	
+	public Case(int caseNumber, int x, int y, boolean top, boolean right, boolean bottom, boolean left, File file, boolean target, Graphics g) {
+		super(g, x, y, file);
+		this.walls[0] = top;
+		this.walls[1] = right;
+		this.walls[2] = bottom;
+		this.walls[3] = left;
+		super.drawImage();
+	}
+	
+	
 	//-----------------------Contructeur
 	public Case(int caseNumber, Graphics g) {
 		super(g);
 		this.caseNumber = caseNumber;
 		
-		System.out.println(caseNumber);
-		
-		if(caseNumber == 0){
-			this.walls[0] = true;
-			this.walls[3] = true;
-			super.setFile(new File("./img/floor_top_left.png"));
-			super.setX(0);
-			super.setY(0);
-			super.drawImage();
-		}
-		
-		if(caseNumber > 0 && caseNumber < 15){
-			this.walls[0] = true;
-			super.setFile(new File("./img/floor_top.png"));
-			super.setX(caseNumber*32);
-			super.setY(0);
-			super.drawImage();
-		}
-		
-		if(caseNumber == 16){
-			this.walls[0] = true;
-			this.walls[1] = true;
-			super.setFile(new File("./img/floor_top.png"));
-			super.setX(caseNumber*32);
-			super.setY(0);
-			super.drawImage();
-		}
-		
-		
-		
-		// Case du contour avec les bordures 
-		/*if(caseNumber==0){
-			//si c'est la case de l'angle en haut à gauche
-			this.walls[0] = true;
-			this.walls[3] = true;
-			//on lui attribut une image
-			super.setFile(new File("./img/floor_top_left.png"));
-			//on definit sa position
-			super.setX(0);
-			super.setY(22);
-			//on affiche l'image
-			super.drawImage();
-		}else if(caseNumber>=1 && caseNumber<=14){
-			//si c'est un case du haut
-			this.walls[0] = true;
-			super.setFile(new File("./img/floor_top.png"));
-			//on definit sa position
-			super.setX(caseNumber*32);
-			super.setY(22);
-			//on affiche l'image
-			super.drawImage();
-		}else if(caseNumber==15){
-			//si c'est la case de haut à droite
-			this.walls[0] = true;
-			this.walls[1] = true;
-			super.setFile(new File("./img/floor_top_right.png"));
-			//on definit sa position
-			super.setX(480);
-			super.setY(22);
-			//on affiche l'image
-			super.drawImage();
-		}else if(caseNumber%16>0 && caseNumber%16<15){
-			//si c'est un case de gauche
-			this.walls[3] = true;
-			super.setFile(new File("./img/floor_left.png"));
-			//on definit sa position
-			super.setX(0);
-			super.setY(22+((caseNumber%16)*32));
-			//on affiche l'image
-			super.drawImage();
-		}else if(caseNumber==240){
-			//si c'est la case d'en bas à gauche
-			this.walls[2] = true;
-			this.walls[3] = true;
-			super.setFile(new File("./img/floor_left_bottom.png"));
-			//on definit sa position
-			super.setX(0);
-			super.setY(22+480);
-			//on affiche l'image
-			super.drawImage();
-		}else if(caseNumber>=241 && caseNumber<=254){
-			//si c'est la case d'en bas à gauche
-			this.walls[2] = true;
-			this.walls[1] = true;
-			super.setFile(new File("./img/floor_right_bottom.png"));
-			//on definit sa position
-			super.setX(50);
-			super.setY(22+480);
-			//on affiche l'image
-			super.drawImage();
-			System.out.println("test");
-		}
-		*/
-		// Les 4 cases du centre
-		if(caseNumber == 119){
-			//haut et gauche
-			this.walls[0] = true;
-			this.walls[3] = true;
-		}else if(caseNumber == 120){
-			//haut et droite
-			this.walls[0] = true;
-			this.walls[1] = true;
-		}else if(caseNumber == 136){
-			//bah et droite
-			this.walls[2] = true;
-			this.walls[1] = true;
-		}else if(caseNumber == 137){
-			//bas et gauche
-			this.walls[2] = true;
-			this.walls[3] = true;
-		}		
+		System.out.println(caseNumber);	
 	}
 	
 	public boolean isTarget()
