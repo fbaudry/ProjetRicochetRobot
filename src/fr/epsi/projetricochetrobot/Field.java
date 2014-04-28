@@ -45,13 +45,16 @@ public class Field extends Window{
 	
 		try {
 			System.setProperty( "file.encoding", "UTF-8" );
-			fr = new FileReader("/Users/FERD/Git/ProjetRicochetRobot/case.txt");
+			fr = new FileReader("./case.csv");
 			BufferedReader reader = new BufferedReader(fr);
 			LineNumberReader counter = new LineNumberReader(reader);
 			String line = null;
 			while ((line = counter.readLine()) != null) {    
 				String[] lineCases = line.split(",");
-				this.cases.put(Integer.parseInt(lineCases[0]), new Case(
+				
+				Integer i = Integer.parseInt(lineCases[0]);
+				
+				Case c = new Case(
 						Integer.parseInt(lineCases[0]),
 						Integer.parseInt(lineCases[1]),
 						Integer.parseInt(lineCases[2]),
@@ -59,9 +62,12 @@ public class Field extends Window{
 						Boolean.parseBoolean(lineCases[4]),
 						Boolean.parseBoolean(lineCases[5]),
 						Boolean.parseBoolean(lineCases[6]),
-						new File(lineCases[7]),
+						new File("./img/" + lineCases[7] + ".png"),
 						false,
-						super.getGraphics()));
+						super.getGraphics());
+				
+				//this.casefield[i] = c;
+				//this.cases.put(i, c);
 			}
 			counter.close();
 		} catch (FileNotFoundException e) {
@@ -71,18 +77,6 @@ public class Field extends Window{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-//		for(int i=0;i<casefield.length;i++)
-//		{
-//			if(i == Constant.targetNumCase)
-//				this.casefield[i] =  new Case(i, true, super.getGraphics());
-//			else
-//				this.casefield[i] = new Case(i, false, super.getGraphics());
-//			
-//			
-//			
-//			
-//		}
 	}
 	
 	public void incrementNbRound()

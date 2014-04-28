@@ -24,7 +24,7 @@ public class Window extends JFrame {
 		this.setUndecorated(true);
 
 		
-		this.setLocation(0, 0);
+		this.setLocation(100, 100);
 		
 		//this.setLocationRelativeTo(null); // la fenêtre est centrée à l'écran
 	    // rendre la fenêtre visible, pack fait en sorte que tous les composants de l'application soient à
