@@ -12,7 +12,7 @@ public class Ant {
 	public Ant()
 	{
 		this.path = new ArrayList<Case>();
-		this.path.add(Field.getInstance().casefield[Constant.startNumCase]);
+		this.path.add(Field.getInstance().casefield[256]);
 	}
 	
 	public void move()
