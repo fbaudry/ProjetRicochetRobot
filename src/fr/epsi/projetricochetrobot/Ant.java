@@ -25,8 +25,16 @@ public class Ant {
 	public void move()
 	{
 		for(int numMove = 0; numMove < nbMoveLeft; numMove++){
-			Case position = path.get(path.size()-1);
-			List<Case> voisines = field.getVoisines(position);
+			Case position = null;
+			
+			if(path.size() > 0)
+				position = path.get(path.size()-1);
+			else
+				position = starter;
+			
+			
+			
+			List<Case> voisines = field.getVoisines(position, path);
 			
 			Case selectedCase = field.selectVoisine(voisines);
 			path.add(selectedCase);

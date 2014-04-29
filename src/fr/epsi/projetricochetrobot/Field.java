@@ -195,7 +195,7 @@ public class Field extends Window{
 		int i = starter.getCaseNumber();
 		while(foundTarget != true)
 		{
-			List<Case> voisines = this.getVoisines(casefield[i]);
+			List<Case> voisines = this.getVoisines(casefield[i], resultWay);
 			Case choisedCase = this.selectVoisine(voisines);
 			resultWay.add(choisedCase);
 			i = choisedCase.getCaseNumber();
@@ -218,9 +218,12 @@ public class Field extends Window{
 		}
 	}
 	
-	public List<Case> getVoisines(Case position)
+	public List<Case> getVoisines(Case position, List<Case> way)
 	{
 		List<Case> voisines = new ArrayList<Case>();
+		
+		System.out.println("Position : " + position.getCaseNumber());
+		
 		
 		int numCaseLeft = position.getCaseNumber() - 1;
 		int numCaseRight = position.getCaseNumber() + 1;
@@ -231,28 +234,28 @@ public class Field extends Window{
 		// Si la case actuelle à une case à sa gauche
 		// Si la case actuelle n'a pas de mur à sa gauche et que sa voisine de gauche n'a pas de mur à droite
 		// Si la case de gauche n'a pas déjà été parcourue
-		if(position.getCaseNumber()%16 != 0 && position.getWall(4) == false && casefield[numCaseLeft].getWall(1) == false && isKnownCase(casefield[numCaseLeft],resultWay) == false){
+		if(position.getCaseNumber()%16 != 0 && position.getWall(3) == false && casefield[numCaseLeft].getWall(1) == false && isKnownCase(casefield[numCaseLeft],way) == false){
 			voisines.add(casefield[numCaseLeft]);
 		}
 		
 		// Si la case actuelle à une case à sa droite
 		// Si la case actuelle n'a pas de mur à sa droite et que sa voisine de droite n'a pas de mur à gauche
 		// Si la case de droite n'a pas déjà été parcourue
-		if(position.getCaseNumber()%16 != 15 && position.getWall(1) == false && casefield[numCaseRight].getWall(4) == false && isKnownCase(casefield[numCaseRight],resultWay) == false){
+		if(position.getCaseNumber()%16 != 15 && position.getWall(1) == false && casefield[numCaseRight].getWall(3) == false && isKnownCase(casefield[numCaseRight],way) == false){
 			voisines.add(casefield[numCaseRight]);
 		}
 		
 		// Si la case actuelle à une case en haut
 		// Si la case actuelle n'a pas de mur en haut et que sa voisine du haut n'a pas de mur en bas
 		// Si la case du haut n'a pas déjà été parcourue
-		if(position.getCaseNumber() > 15 && position.getWall(0) == false && casefield[numCaseTop].getWall(3) == false && isKnownCase(casefield[numCaseTop],resultWay) == false){
+		if(position.getCaseNumber() > 15 && position.getWall(0) == false && casefield[numCaseTop].getWall(3) == false && isKnownCase(casefield[numCaseTop],way) == false){
 			voisines.add(casefield[numCaseTop]);
 		}
 		
 		// Si la case actuelle à une case en bas
 		// Si la case actuelle n'a pas de mur en bas et que sa vosiine du bas n'a pas de mur en haut
 		// Si la case du bas n'a pas déjà été parcourue
-		if(position.getCaseNumber() < 240 && position.getWall(3) == false && casefield[numCaseBottom].getWall(0) == false && isKnownCase(casefield[numCaseBottom],resultWay) == false){
+		if(position.getCaseNumber() < 240 && position.getWall(3) == false && casefield[numCaseBottom].getWall(0) == false && isKnownCase(casefield[numCaseBottom],way) == false){
 			voisines.add(casefield[numCaseBottom]);
 		}
 		
