@@ -29,6 +29,7 @@ public class Case extends Panel{
 	
 	public Case(int caseNumber, int x, int y, boolean top, boolean right, boolean bottom, boolean left, boolean target, Graphics g) {
 		super(g, x, y);
+		this.caseNumber = caseNumber;
 		this.walls[0] = top;
 		this.walls[1] = right;
 		this.walls[2] = bottom;
@@ -101,6 +102,11 @@ public class Case extends Panel{
 			super.setFile(new File("./img/floor_left_bottom.png"));
 		}else if(this.walls[0]==false && this.walls[1]==false && this.walls[2]==true && this.walls[3]==false){
 			super.setFile(new File("./img/floor_bottom.png"));
+		}else if(this.walls[0]==true && this.walls[1]==false && this.walls[2]==true && this.walls[3]==false){
+			super.setFile(new File("./img/floor_top_bottom.png"));
+		}else if(this.walls[0]==false && this.walls[1]==true && this.walls[2]==false && this.walls[3]==true){
+			System.out.println("la case " + this.caseNumber + " à un mur à gauche et à droite");
+			super.setFile(new File("./img/floor_right_left.png"));
 		}
 	}
 }
