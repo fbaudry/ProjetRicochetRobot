@@ -197,17 +197,12 @@ public class Field extends Window{
 		{
 			Case choisedCase = null;
 			List<Case> voisines = this.getVoisines(casefield[i]);
-			for(j=0;j<voisines.size();j++)
+			choisedCase = this.selectVoisine(voisines);
+			resultWay.add(choisedCase);
+			i = choisedCase.getCaseNumber();
+			if(choisedCase == target)
 			{
-				if(choisedCase == null ||choisedCase.getPheronomeLevel() <= voisines.get(j).getPheronomeLevel() && resultWay.contains(voisines.get(j)) == false)
-				{
-					choisedCase = voisines.get(j);
-					resultWay.add(choisedCase);
-					if(choisedCase == target)
-					{
-						foundTarget = true;
-					}
-				}
+					foundTarget = true;
 			}
 		}
 	}
