@@ -19,12 +19,12 @@ public class Panel extends JPanel {
 	private Graphics g;
 	
 	//-------------------------contructeur
-	public Panel(Graphics g, int x, int y, File file) {
+	public Panel(Graphics g, int x, int y) {
 		super();
 		this.g = g;
 		this.x = x;
 		this.y = y;
-		this.file = file;
+		this.file = new File("./img/floor.png");
 	}
 	
 	public Panel(Graphics g) {

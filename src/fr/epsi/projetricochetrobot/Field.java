@@ -1,12 +1,9 @@
 package fr.epsi.projetricochetrobot;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +21,9 @@ public class Field extends Window{
 	public int nbRound;
 	public boolean finished;
 	public Map<Integer, Case> cases;
-	public Case[] casefield;
+	public Case[] casefield = new Case[256];
 	public List<Case> resultWay;
+
 	
 	private Case starter = null;
 	private Case target = null;
@@ -48,6 +46,7 @@ public class Field extends Window{
 		
 		FileReader fr;
 	
+		//on initialise les cases
 		try {
 			System.setProperty( "file.encoding", "UTF-8" );
 			fr = new FileReader("./case.csv");
@@ -67,12 +66,61 @@ public class Field extends Window{
 						Boolean.parseBoolean(lineCases[4]),
 						Boolean.parseBoolean(lineCases[5]),
 						Boolean.parseBoolean(lineCases[6]),
-						new File("./img/" + lineCases[7] + ".png"),
 						false,
 						super.getGraphics());
 				
-				//this.casefield[i] = c;
+				//0->haut; 1->droite; 2->bas; 3->gauche				
+				c.setFile();
+				c.drawImage();
+				
 				//this.cases.put(i, c);
+				casefield[i]=c;
+			}
+			counter.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//on initialise les mures
+		try {
+			System.setProperty( "file.encoding", "UTF-8" );
+			fr = new FileReader("./walls.csv");
+			BufferedReader reader = new BufferedReader(fr);
+			LineNumberReader counter = new LineNumberReader(reader);
+			String line = null;
+			while ((line = counter.readLine()) != null) {    
+				String[] lineCases = line.split(",");
+				
+				if(Integer.parseInt(lineCases[0])+1 == Integer.parseInt(lineCases[1])){
+					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
+					c1.setWallRight();
+					c1.setFile();
+					c1.drawImage();
+					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
+					c2.setWallLeft();
+					c2.setFile();
+					c2.drawImage();
+				}else if(Integer.parseInt(lineCases[0])+16 == Integer.parseInt(lineCases[1])){
+					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
+					c1.setWallBottom();
+					c1.setFile();
+					c1.drawImage();
+					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
+					c2.setWallTop();
+					c2.setFile();
+					c2.drawImage();
+				}
 			}
 			counter.close();
 		} catch (FileNotFoundException e) {
@@ -144,8 +192,8 @@ public class Field extends Window{
 		// Nous plaçons un booléen à false afin d'arreter la boucle lorsque toute les fourmi aurons chercher
 		while(foundTarget != true)
 		{
-			Case choisedCase;
-			List<Case> voisines = this.casefield[i].getVoisines();
+			Case choisedCase = null;
+			List<Case> voisines = this.getVoisines(casefield[i]);
 			for(j=0;j<voisines.size();j++)
 			{
 				if(choisedCase == null ||choisedCase.getPheronomeLevel() <= voisines.get(j).getPheronomeLevel() && resultWay.contains(voisines.get(j)) == false)
@@ -159,5 +207,54 @@ public class Field extends Window{
 				}
 			}
 		}
+	}
+	public List<Case> getVoisines(Case position)
+	{
+		List<Case> voisines = new ArrayList<Case>();
+		
+		int numCaseLeft = position.getCaseNumber() - 1;
+		int numCaseRight = position.getCaseNumber() + 1;
+		int numCaseTop = position.getCaseNumber() - 16;
+		int numCaseBottom = position.getCaseNumber() + 16;
+		
+		
+		// Si la case actuelle à une case à sa gauche
+		// Si la case actuelle n'a pas de mur à sa gauche et que sa voisine de gauche n'a pas de mur à droite
+		// Si la case de gauche n'a pas déjà été parcourue
+		if(position.getCaseNumber()%16 != 0 && position.getWall(4) == false && casefield[numCaseLeft].getWall(1) == false && isKnownCase(casefield[numCaseLeft],resultWay) == false){
+			voisines.add(casefield[numCaseLeft]);
+		}
+		
+		// Si la case actuelle à une case à sa droite
+		// Si la case actuelle n'a pas de mur à sa droite et que sa voisine de droite n'a pas de mur à gauche
+		// Si la case de droite n'a pas déjà été parcourue
+		if(position.getCaseNumber()%16 != 15 && position.getWall(1) == false && casefield[numCaseRight].getWall(4) == false && isKnownCase(casefield[numCaseRight],resultWay) == false){
+			voisines.add(casefield[numCaseRight]);
+		}
+		
+		// Si la case actuelle à une case en haut
+		// Si la case actuelle n'a pas de mur en haut et que sa voisine du haut n'a pas de mur en bas
+		// Si la case du haut n'a pas déjà été parcourue
+		if(position.getCaseNumber() > 15 && position.getWall(0) == false && casefield[numCaseTop].getWall(3) == false && isKnownCase(casefield[numCaseTop],resultWay) == false){
+			voisines.add(casefield[numCaseTop]);
+		}
+		
+		// Si la case actuelle à une case en bas
+		// Si la case actuelle n'a pas de mur en bas et que sa vosiine du bas n'a pas de mur en haut
+		// Si la case du bas n'a pas déjà été parcourue
+		if(position.getCaseNumber() < 240 && position.getWall(3) == false && casefield[numCaseBottom].getWall(0) == false && isKnownCase(casefield[numCaseBottom],resultWay) == false){
+			voisines.add(casefield[numCaseBottom]);
+		}
+		
+		
+		return voisines;
+	}
+	public boolean isKnownCase(Case position, List<Case> way){
+		for(int i = 0; i < way.size(); i++){
+			if(position == way.get(i))
+				return true;
+		}
+		
+		return false;
 	}
 }
