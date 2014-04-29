@@ -18,6 +18,8 @@ public class Field extends Window{
 
 	private static Field instance = null;
 	
+	private int nbFoundWay = 0;
+	
 	public int nbRound;
 	public boolean finished;
 	public Map<Integer, Case> cases;
@@ -139,6 +141,7 @@ public class Field extends Window{
 		int nbFoundWay = 0;
 		while(nbFoundWay < Constant.nbFoundWay){
 			Ant ant = new Ant(starter, target);
+			ant.move();
 		}
 	}
 	
@@ -288,4 +291,9 @@ public class Field extends Window{
 		
 		return selection;
 	}
+	
+	public void incrNbFoundWay(){
+		nbFoundWay++;
+	}
+	
 }

@@ -16,6 +16,20 @@ public class Case extends Panel{
 		return pheronomeLevel;
 	}
 
+	public void addPheromone(){
+		if(pheronomeLevel + Constant.tauxPheromone > Constant.maxPheromone)
+			pheronomeLevel = Constant.maxPheromone;
+		else
+			pheronomeLevel += Constant.tauxPheromone;
+	}
+	
+	public void removePheromone(){
+		if(pheronomeLevel - Constant.tauxPheromone < Constant.minPheromone)
+			pheronomeLevel = Constant.minPheromone;
+		else
+			pheronomeLevel -= Constant.tauxPheromone;
+	}
+	
 	public void setPheronomeLevel(int pheronomeLevel) {
 		this.pheronomeLevel = pheronomeLevel;
 	}

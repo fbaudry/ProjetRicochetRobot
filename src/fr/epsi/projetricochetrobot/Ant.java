@@ -28,8 +28,24 @@ public class Ant {
 			Case position = path.get(path.size()-1);
 			List<Case> voisines = field.getVoisines(position);
 			
+			Case selectedCase = field.selectVoisine(voisines);
+			path.add(selectedCase);
+			
+			if(selectedCase == target){
+				pheromonize();
+				numMove = nbMoveLeft;
+				field.incrNbFoundWay();
+			}
 			
 		}
 	}
+	
+	public void pheromonize(){
+		for(int i = 0; i < path.size(); i++){
+			path.get(i).addPheromone();
+		}
+	}
+	
+	
 
 }
