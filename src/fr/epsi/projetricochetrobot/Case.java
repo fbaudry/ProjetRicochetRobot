@@ -40,10 +40,16 @@ public class Case extends Panel{
 
 	public void setStarter(boolean starter) {
 		this.starter = starter;
+		Panel starterLayer = new Panel(super.getGraphics(), super.getX(), super.getY());
+		starterLayer.setFile(new File("./img/start_layer.png"));
+		starterLayer.drawImage();
 	}
 
 	public void setTarget(boolean target) {
 		this.target = target;
+		Panel starterLayer = new Panel(super.getGraphics(), super.getX(), super.getY());
+		starterLayer.setFile(new File("./img/end_layer.png"));
+		starterLayer.drawImage();
 	}
 
 	private boolean target;
@@ -129,7 +135,6 @@ public class Case extends Panel{
 		}else if(this.walls[0]==true && this.walls[1]==false && this.walls[2]==true && this.walls[3]==false){
 			super.setFile(new File("./img/floor_top_bottom.png"));
 		}else if(this.walls[0]==false && this.walls[1]==true && this.walls[2]==false && this.walls[3]==true){
-			System.out.println("la case " + this.caseNumber + " à un mur à gauche et à droite");
 			super.setFile(new File("./img/floor_right_left.png"));
 		}
 	}

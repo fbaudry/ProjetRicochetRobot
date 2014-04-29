@@ -8,6 +8,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * @author FERD
+ *
+ */
 public class Panel extends JPanel {
 	/**
 	 * 
@@ -62,5 +66,9 @@ public class Panel extends JPanel {
 	    } catch (IOException e) {
 	    	e.printStackTrace();
 	    }                
+	}
+
+	public Graphics getGraphics() {
+		return g;
 	}
 }
