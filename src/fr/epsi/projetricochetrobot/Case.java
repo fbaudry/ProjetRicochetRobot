@@ -10,7 +10,7 @@ public class Case extends Panel{
 	//-----------------------Variables
 	private int caseNumber;
 	private boolean[] walls = {false, false, false, false};	//permet de définir quel coté est un mur ----> 0->haut; 1->droite; 2->bas; 3->gauche
-	private int pheronomeLevel = 0;
+	private int pheronomeLevel = Constant.minPheromone;
 	
 	public int getPheronomeLevel() {
 		return pheronomeLevel;
@@ -107,7 +107,7 @@ public class Case extends Panel{
 
 	public boolean getWall(int border)
 	{
-		if(border > 0 && border < 3)
+		if(border >= 0 && border <= 3)
 		{
 			return this.walls[border];
 		}

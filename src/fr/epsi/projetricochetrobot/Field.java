@@ -138,13 +138,25 @@ public class Field extends Window{
 	}
 	
 	public void runAnt(){
-		int nbFoundWay = 0;
+		nbFoundWay = 0;
+		int temp = 0;
 		while(nbFoundWay < Constant.nbFoundWay){
+			System.out.println("NB FOUND WAY : " + nbFoundWay);
 			Ant ant = new Ant(starter, target);
 			ant.move();
+			temp++;
+			evaporation();
 		}
 	}
 	
+	public int getNbFoundWay() {
+		return nbFoundWay;
+	}
+
+	public void setNbFoundWay(int nbFoundWay) {
+		this.nbFoundWay = nbFoundWay;
+	}
+
 	public void incrementNbRound()
 	{
 		nbRound++;
@@ -220,10 +232,7 @@ public class Field extends Window{
 	public List<Case> getVoisines(Case position, List<Case> way)
 	{
 		List<Case> voisines = new ArrayList<Case>();
-		
-		System.out.println("Position : " + position.getCaseNumber());
-		
-		
+				
 		int numCaseLeft = position.getCaseNumber() - 1;
 		int numCaseRight = position.getCaseNumber() + 1;
 		int numCaseTop = position.getCaseNumber() - 16;
@@ -233,30 +242,41 @@ public class Field extends Window{
 		// Si la case actuelle à une case à sa gauche
 		// Si la case actuelle n'a pas de mur à sa gauche et que sa voisine de gauche n'a pas de mur à droite
 		// Si la case de gauche n'a pas déjà été parcourue
-		if(position.getCaseNumber()%16 != 0 && position.getWall(3) == false && casefield[numCaseLeft].getWall(1) == false && isKnownCase(casefield[numCaseLeft],way) == false){
-			voisines.add(casefield[numCaseLeft]);
-		}
+		if(position.getCaseNumber()%16 != 0)
+			if(position.getWall(3) == false)
+				if(casefield[numCaseLeft].getWall(1) == false)
+					if(isKnownCase(casefield[numCaseLeft],way) == false)
+						voisines.add(casefield[numCaseLeft]);
+		
 		
 		// Si la case actuelle à une case à sa droite
 		// Si la case actuelle n'a pas de mur à sa droite et que sa voisine de droite n'a pas de mur à gauche
 		// Si la case de droite n'a pas déjà été parcourue
-		if(position.getCaseNumber()%16 != 15 && position.getWall(1) == false && casefield[numCaseRight].getWall(3) == false && isKnownCase(casefield[numCaseRight],way) == false){
-			voisines.add(casefield[numCaseRight]);
-		}
+		if(position.getCaseNumber()%16 != 15)
+			if(position.getWall(1) == false)
+				if(casefield[numCaseRight].getWall(3) == false)
+					if(isKnownCase(casefield[numCaseRight],way) == false)
+						voisines.add(casefield[numCaseRight]);
+		
 		
 		// Si la case actuelle à une case en haut
 		// Si la case actuelle n'a pas de mur en haut et que sa voisine du haut n'a pas de mur en bas
 		// Si la case du haut n'a pas déjà été parcourue
-		if(position.getCaseNumber() > 15 && position.getWall(0) == false && casefield[numCaseTop].getWall(3) == false && isKnownCase(casefield[numCaseTop],way) == false){
-			voisines.add(casefield[numCaseTop]);
-		}
+		if(position.getCaseNumber() > 15)
+			if(position.getWall(0) == false)
+				if(casefield[numCaseTop].getWall(3) == false)
+					if(isKnownCase(casefield[numCaseTop],way) == false)
+						voisines.add(casefield[numCaseTop]);
+		
 		
 		// Si la case actuelle à une case en bas
 		// Si la case actuelle n'a pas de mur en bas et que sa vosiine du bas n'a pas de mur en haut
 		// Si la case du bas n'a pas déjà été parcourue
-		if(position.getCaseNumber() < 240 && position.getWall(3) == false && casefield[numCaseBottom].getWall(0) == false && isKnownCase(casefield[numCaseBottom],way) == false){
-			voisines.add(casefield[numCaseBottom]);
-		}
+		if(position.getCaseNumber() < 240)
+			if(position.getWall(3) == false)
+				if(casefield[numCaseBottom].getWall(0) == false)
+					if(isKnownCase(casefield[numCaseBottom],way) == false)
+						voisines.add(casefield[numCaseBottom]);
 		
 		
 		return voisines;
@@ -291,8 +311,9 @@ public class Field extends Window{
 		double temp = 0;
 		for(int i = 0; i < voisines.size(); i++){
 			double luck = (double)voisines.get(i).getPheronomeLevel()/totalPheromone;
-			if(rand >= temp && rand < luck){
+			if(rand >= temp && rand < (luck + temp)){
 				selection =  voisines.get(i);
+				break;
 			}else{
 				temp += luck;
 			}
@@ -303,6 +324,12 @@ public class Field extends Window{
 	
 	public void incrNbFoundWay(){
 		nbFoundWay++;
+	}
+	
+	public void evaporation(){
+		for(int i = 0; i < casefield.length; i++){
+			casefield[i].removePheromone();
+		}
 	}
 	
 }

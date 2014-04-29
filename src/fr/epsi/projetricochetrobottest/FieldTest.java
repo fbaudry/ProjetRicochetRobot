@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import fr.epsi.projetricochetrobot.Case;
 import fr.epsi.projetricochetrobot.Field;
 
 @RunWith(JUnit4.class)

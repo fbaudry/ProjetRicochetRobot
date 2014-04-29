@@ -12,6 +12,8 @@ public class Ant {
 	private Case target;
 	private Field field;
 	
+	private Case position;
+	
 	
 	public Ant(Case starter, Case target)
 	{
@@ -20,31 +22,30 @@ public class Ant {
 		this.starter = starter;
 		this.target = target;
 		field = Field.getInstance();
+		position = starter;
 	}
 	
 	public void move()
 	{
 		for(int numMove = 0; numMove < nbMoveLeft; numMove++){
-			Case position = null;
-			
-			if(path.size() > 0)
-				position = path.get(path.size()-1);
-			else
-				position = starter;
-			
-			
-			
+						
 			List<Case> voisines = field.getVoisines(position, path);
 			
-			Case selectedCase = field.selectVoisine(voisines);
-			path.add(selectedCase);
-			
-			if(selectedCase == target){
-				pheromonize();
+			if(voisines == null || voisines.size() == 0)
 				numMove = nbMoveLeft;
-				field.incrNbFoundWay();
+			else {
+				Case selectedCase = field.selectVoisine(voisines);
+				path.add(selectedCase);
+				
+				position = selectedCase;
+				
+				if(selectedCase == target){
+					pheromonize();
+					numMove = nbMoveLeft;
+					field.incrNbFoundWay();
+					System.out.println("NB CHEMIN TROUVE : " + field.getNbFoundWay());
+				}
 			}
-			
 		}
 	}
 	
