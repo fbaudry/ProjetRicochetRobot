@@ -113,7 +113,6 @@ public class Field extends Window{
 					c2.setWallLeft();
 					c2.setFile();
 					c2.drawImage();
-					System.out.println("numero" +  lineCases[1] + " droite " + c2.getWall(1) + " gauche " + c2.getWall(3));
 				}else if(Integer.parseInt(lineCases[0])+16 == Integer.parseInt(lineCases[1])){
 					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
 					c1.setWallBottom();

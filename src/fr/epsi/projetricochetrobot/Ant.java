@@ -45,7 +45,4 @@ public class Ant {
 			path.get(i).addPheromone();
 		}
 	}
-	
-	
-
 }
