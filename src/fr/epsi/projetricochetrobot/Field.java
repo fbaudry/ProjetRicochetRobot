@@ -80,6 +80,16 @@ public class Field extends Window{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		initStarterAndTarget();
+		runAnt();
+	}
+	
+	public void runAnt(){
+		int nbFoundWay = 0;
+		while(nbFoundWay < Constant.nbFoundWay){
+			Ant ant = new Ant(casefield, starter, target);
+		}
 	}
 	
 	public void incrementNbRound()

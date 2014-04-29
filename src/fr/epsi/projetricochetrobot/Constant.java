@@ -5,5 +5,5 @@ public class Constant {
 	public static int targetNumCase = 200;
 	public static int startNumCase = 7;
 
-	public static int nbAnt = 5000;
+	public static int nbFoundWay = 100;
 }

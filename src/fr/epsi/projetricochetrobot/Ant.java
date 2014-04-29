@@ -8,92 +8,79 @@ public class Ant {
 	private List<Case> path;
 	private int nbMoveLeft = Constant.nbMove;
 	
+	private Case starter;
+	private Case target;
+	private Case[] cases;
 	
-	public Ant(Case starter)
+	
+	public Ant(Case[] cases, Case starter, Case target)
 	{
+		this.cases = cases;
 		this.path = new ArrayList<Case>();
 		this.path.add(starter);
+		this.starter = starter;
+		this.target = target;
 	}
 	
 	public void move()
 	{
-		// La fourmi bouge vers la gauche, la droite, le haut ou le bas
-		path.add(this.getCaseToMove());
-		
-		// Réduire le nombre de coup restant
-		nbMoveLeft--;
-		
-		// Vérifier si la foumi est sur la case cible
-		if(this.getAntPosition().isTarget())
-			Field.getInstance().setFinished(false);
+		for(int numMove = 0; numMove < nbMoveLeft; numMove++){
+			
+			
+			
+		}
 	}
 	
-	public Case getCaseToMove()
+	public List<Case> getVoisines(Case position)
 	{
-		List<Case> cases = new ArrayList<Case>();
+		List<Case> voisines = new ArrayList<Case>();
 		
-		// Vérifier si il y a une case a gauche, et l'ajouter dans la liste de tirage
-		if(this.getAntPosition().getCaseNumber() % 16 != 0 && this.getAntPosition().getCaseNumber() != 121 && this.getAntPosition().getCaseNumber() != 138)
-		{
-			// Vérifier si il n'y a pas de bordure à gauche sur la case actuelle
-			// Vérifier si il n'y a pas de bordure droite sur la case à gauche
-			if(this.getAntPosition().getWall(3) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-1].getWall(1) == false)
-			{
-				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-1]);	
-			}
-		}
-			
+		int numCaseLeft = position.getCaseNumber() - 1;
+		int numCaseRight = position.getCaseNumber() + 1;
+		int numCaseTop = position.getCaseNumber() - 16;
+		int numCaseBottom = position.getCaseNumber() + 16;
 		
-		// Vérifier si il y a une case a droite, et l'ajouter dans la liste de  tirage
-		if((this.getAntPosition().getCaseNumber() - 15) < 0 || (this.getAntPosition().getCaseNumber()-15) % 16 != 0 && this.getAntPosition().getCaseNumber() != 118 && this.getAntPosition().getCaseNumber() != 135)
-		{
-			// Vérifier si il n'y a pas de bordure a droite sur la case actuelle
-			// Vérifier si il n'y a pas de bordure gauche sur la case à droite
-			if(this.getAntPosition().getWall(1) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+1].getWall(3) == false)
-			{
-				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+1]);	
-			}			
+		
+		// Si la case actuelle à une case à sa gauche
+		// Si la case actuelle n'a pas de mur à sa gauche et que sa voisine de gauche n'a pas de mur à droite
+		// Si la case de gauche n'a pas déjà été parcourue
+		if(position.getCaseNumber()%16 != 0 && position.getWall(4) == false && cases[numCaseLeft].getWall(1) == false && isKnownCase(cases[numCaseLeft]) == false){
+			voisines.add(cases[numCaseLeft]);
 		}
 		
-		// Vérifier si il y a une case en haut, et l'ajouter dans la liste de tirage
-		if(this.getAntPosition().getCaseNumber() > 15 && this.getAntPosition().getCaseNumber() != 152 && this.getAntPosition().getCaseNumber() != 153)
-		{
-			// Vérifier si il n'y a pas de bordure en haut sur la case actuelle
-			// Vérifier si il n'y a pas de bordure en bas sur la case en haut
-			if(this.getAntPosition().getWall(0) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-16].getWall(2) == false)
-			{
-				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()-16]);
-			}
+		// Si la case actuelle à une case à sa droite
+		// Si la case actuelle n'a pas de mur à sa droite et que sa voisine de droite n'a pas de mur à gauche
+		// Si la case de droite n'a pas déjà été parcourue
+		if(position.getCaseNumber()%16 != 15 && position.getWall(1) == false && cases[numCaseRight].getWall(4) == false && isKnownCase(cases[numCaseRight]) == false){
+			voisines.add(cases[numCaseRight]);
 		}
-			
 		
-		// Vérifier si il y a une case en bas et l'ajouter dans la liste de tirage
-		if(this.getAntPosition().getCaseNumber() < 239 && this.getAntPosition().getCaseNumber() != 103 && this.getAntPosition().getCaseNumber() != 104)
-		{
-			// Vérifier si il n'y a pas de bordure en bas sur la case actuelle
-			// Vérifier si il n'y a pas de bordure en haut sur la case en bas
-			if(this.getAntPosition().getWall(2) == false && Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+16].getWall(0) == false)
-			{
-				cases.add(Field.getInstance().casefield[this.getAntPosition().getCaseNumber()+16]);
-			}
+		// Si la case actuelle à une case en haut
+		// Si la case actuelle n'a pas de mur en haut et que sa voisine du haut n'a pas de mur en bas
+		// Si la case du haut n'a pas déjà été parcourue
+		if(position.getCaseNumber() > 15 && position.getWall(0) == false && cases[numCaseTop].getWall(3) == false && isKnownCase(cases[numCaseTop]) == false){
+			voisines.add(cases[numCaseTop]);
 		}
-			
-		//Tirage d'un nombre entre 0 et 1
-		Random random = new Random();
-		double value = random.nextDouble();
+		
+		// Si la case actuelle à une case en bas
+		// Si la case actuelle n'a pas de mur en bas et que sa vosiine du bas n'a pas de mur en haut
+		// Si la case du bas n'a pas déjà été parcourue
+		if(position.getCaseNumber() < 240 && position.getWall(3) == false && cases[numCaseBottom].getWall(0) == false && isKnownCase(cases[numCaseBottom]) == false){
+			voisines.add(cases[numCaseBottom]);
+		}
 		
 		
-			
-		// Retourner la case selectionnée
-		return null;
+		return voisines;
 	}
 	
-	
-	public Case getAntPosition()
-	{
-		return path.get(path.size()-1);
+	public boolean isKnownCase(Case position){
+		for(int i = 0; i < path.size(); i++){
+			if(position == path.get(i))
+				return true;
+		}
+		
+		return false;
 	}
-	
 	
 	
 	
