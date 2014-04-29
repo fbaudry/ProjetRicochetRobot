@@ -12,6 +12,28 @@ public class Case extends Panel{
 	private boolean[] walls = {false, false, false, false};	//permet de définir quel coté est un mur ----> 0->haut; 1->droite; 2->bas; 3->gauche
 	private int pheronomeLevel = 0;
 	
+	public int getPheronomeLevel() {
+		return pheronomeLevel;
+	}
+
+	public void addPheromone(){
+		if(pheronomeLevel + Constant.tauxPheromone > Constant.maxPheromone)
+			pheronomeLevel = Constant.maxPheromone;
+		else
+			pheronomeLevel += Constant.tauxPheromone;
+	}
+	
+	public void removePheromone(){
+		if(pheronomeLevel - Constant.tauxPheromone < Constant.minPheromone)
+			pheronomeLevel = Constant.minPheromone;
+		else
+			pheronomeLevel -= Constant.tauxPheromone;
+	}
+	
+	public void setPheronomeLevel(int pheronomeLevel) {
+		this.pheronomeLevel = pheronomeLevel;
+	}
+
 	public boolean isStarter() {
 		return starter;
 	}
@@ -26,6 +48,8 @@ public class Case extends Panel{
 
 	private boolean target;
 	private boolean starter;
+	
+	
 	
 	public Case(int caseNumber, int x, int y, boolean top, boolean right, boolean bottom, boolean left, boolean target, Graphics g) {
 		super(g, x, y);

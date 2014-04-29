@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Field extends Window{
 	
@@ -13,10 +18,14 @@ public class Field extends Window{
 
 	private static Field instance = null;
 	
+	private int nbFoundWay = 0;
+	
 	public int nbRound;
 	public boolean finished;
-	//public HashMap<Integer, Case> cases = new HashMap<Integer, Case>();
+	public Map<Integer, Case> cases;
 	public Case[] casefield = new Case[256];
+	public List<Case> resultWay;
+
 	
 	private Case starter = null;
 	private Case target = null;
@@ -132,7 +141,8 @@ public class Field extends Window{
 	public void runAnt(){
 		int nbFoundWay = 0;
 		while(nbFoundWay < Constant.nbFoundWay){
-			Ant ant = new Ant(casefield, starter, target);
+			Ant ant = new Ant(starter, target);
+			ant.move();
 		}
 	}
 	
@@ -176,5 +186,121 @@ public class Field extends Window{
 		starter = this.casefield[numberCaseStarter];
 		target = this.casefield[numberCaseTarget];
 	}
-
+	
+	public void findWay()
+	{
+		resultWay =  new ArrayList<Case>();
+		boolean foundTarget = false;
+		
+		int i = starter.getCaseNumber();
+		while(foundTarget != true)
+		{
+			List<Case> voisines = this.getVoisines(casefield[i]);
+			Case choisedCase = this.selectVoisine(voisines);
+			resultWay.add(choisedCase);
+			i = choisedCase.getCaseNumber();
+			if(choisedCase == target)
+				foundTarget = true;
+		}
+		
+		showRightWay();
+		
+	}
+	
+	public void showRightWay(){
+		System.out.println("Chemin trouvé");
+		System.out.println("Case de départ : " + starter.getCaseNumber());
+		System.out.println("Case d'arrivée : " + target.getCaseNumber());
+		System.out.println("-----------------");
+		
+		for(int i = 0; i < resultWay.size(); i++){
+			System.out.println(resultWay.get(i).getCaseNumber());
+		}
+	}
+	
+	public List<Case> getVoisines(Case position)
+	{
+		List<Case> voisines = new ArrayList<Case>();
+		
+		int numCaseLeft = position.getCaseNumber() - 1;
+		int numCaseRight = position.getCaseNumber() + 1;
+		int numCaseTop = position.getCaseNumber() - 16;
+		int numCaseBottom = position.getCaseNumber() + 16;
+		
+		
+		// Si la case actuelle à une case à sa gauche
+		// Si la case actuelle n'a pas de mur à sa gauche et que sa voisine de gauche n'a pas de mur à droite
+		// Si la case de gauche n'a pas déjà été parcourue
+		if(position.getCaseNumber()%16 != 0 && position.getWall(4) == false && casefield[numCaseLeft].getWall(1) == false && isKnownCase(casefield[numCaseLeft],resultWay) == false){
+			voisines.add(casefield[numCaseLeft]);
+		}
+		
+		// Si la case actuelle à une case à sa droite
+		// Si la case actuelle n'a pas de mur à sa droite et que sa voisine de droite n'a pas de mur à gauche
+		// Si la case de droite n'a pas déjà été parcourue
+		if(position.getCaseNumber()%16 != 15 && position.getWall(1) == false && casefield[numCaseRight].getWall(4) == false && isKnownCase(casefield[numCaseRight],resultWay) == false){
+			voisines.add(casefield[numCaseRight]);
+		}
+		
+		// Si la case actuelle à une case en haut
+		// Si la case actuelle n'a pas de mur en haut et que sa voisine du haut n'a pas de mur en bas
+		// Si la case du haut n'a pas déjà été parcourue
+		if(position.getCaseNumber() > 15 && position.getWall(0) == false && casefield[numCaseTop].getWall(3) == false && isKnownCase(casefield[numCaseTop],resultWay) == false){
+			voisines.add(casefield[numCaseTop]);
+		}
+		
+		// Si la case actuelle à une case en bas
+		// Si la case actuelle n'a pas de mur en bas et que sa vosiine du bas n'a pas de mur en haut
+		// Si la case du bas n'a pas déjà été parcourue
+		if(position.getCaseNumber() < 240 && position.getWall(3) == false && casefield[numCaseBottom].getWall(0) == false && isKnownCase(casefield[numCaseBottom],resultWay) == false){
+			voisines.add(casefield[numCaseBottom]);
+		}
+		
+		
+		return voisines;
+	}
+	
+	public boolean isKnownCase(Case position, List<Case> way){
+		for(int i = 0; i < way.size(); i++){
+			if(position == way.get(i))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public Case selectVoisine(List<Case> voisines){
+		// Si une des fonction voisines est l'arrivee
+		for(int i = 0; i < voisines.size(); i++){
+			if(voisines.get(i) == target)
+				return voisines.get(i);
+		}
+		
+		// Sinon on utilise la roue biaisée
+		Case selection = null;
+		
+		int totalPheromone = 0;
+		for(int i = 0; i < voisines.size(); i++){
+			totalPheromone += voisines.get(i).getPheronomeLevel();
+		}
+		
+		double rand = Math.random();
+		
+		double temp = 0;
+		for(int i = 0; i < voisines.size(); i++){
+			double luck = (double)voisines.get(i).getPheronomeLevel()/totalPheromone;
+			if(rand >= temp && rand < luck){
+				selection =  voisines.get(i);
+			}else{
+				temp += luck;
+			}
+		}
+		
+		return selection;
+	}
+	
+	public void incrNbFoundWay(){
+		nbFoundWay++;
+	}
+	
 }
