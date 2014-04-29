@@ -138,7 +138,7 @@ public class Field extends Window{
 	public void runAnt(){
 		int nbFoundWay = 0;
 		while(nbFoundWay < Constant.nbFoundWay){
-			Ant ant = new Ant(casefield, starter, target);
+			Ant ant = new Ant(starter, target);
 		}
 	}
 	
@@ -249,6 +249,7 @@ public class Field extends Window{
 		
 		return voisines;
 	}
+	
 	public boolean isKnownCase(Case position, List<Case> way){
 		for(int i = 0; i < way.size(); i++){
 			if(position == way.get(i))
@@ -256,5 +257,35 @@ public class Field extends Window{
 		}
 		
 		return false;
+	}
+	
+	public Case selectVoisine(List<Case> voisines){
+		// Si une des fonction voisines est l'arrivee
+		for(int i = 0; i < voisines.size(); i++){
+			if(voisines.get(i) == target)
+				return voisines.get(i);
+		}
+		
+		// Sinon on utilise la roue biaisée
+		Case selection = null;
+		
+		int totalPheromone = 0;
+		for(int i = 0; i < voisines.size(); i++){
+			totalPheromone += voisines.get(i).getPheronomeLevel();
+		}
+		
+		double rand = Math.random();
+		
+		double temp = 0;
+		for(int i = 0; i < voisines.size(); i++){
+			double luck = (double)voisines.get(i).getPheronomeLevel()/totalPheromone;
+			if(rand >= temp && rand < luck){
+				selection =  voisines.get(i);
+			}else{
+				temp += luck;
+			}
+		}
+		
+		return selection;
 	}
 }
