@@ -190,22 +190,33 @@ public class Field extends Window{
 	{
 		resultWay =  new ArrayList<Case>();
 		boolean foundTarget = false;
+		
 		int i = starter.getCaseNumber();
-		int j;
-		// Nous plaçons un booléen à false afin d'arreter la boucle lorsque toute les fourmi aurons chercher
 		while(foundTarget != true)
 		{
-			Case choisedCase = null;
 			List<Case> voisines = this.getVoisines(casefield[i]);
-			choisedCase = this.selectVoisine(voisines);
+			Case choisedCase = this.selectVoisine(voisines);
 			resultWay.add(choisedCase);
 			i = choisedCase.getCaseNumber();
 			if(choisedCase == target)
-			{
-					foundTarget = true;
-			}
+				foundTarget = true;
+		}
+		
+		showRightWay();
+		
+	}
+	
+	public void showRightWay(){
+		System.out.println("Chemin trouvé");
+		System.out.println("Case de départ : " + starter.getCaseNumber());
+		System.out.println("Case d'arrivée : " + target.getCaseNumber());
+		System.out.println("-----------------");
+		
+		for(int i = 0; i < resultWay.size(); i++){
+			System.out.println(resultWay.get(i).getCaseNumber());
 		}
 	}
+	
 	public List<Case> getVoisines(Case position)
 	{
 		List<Case> voisines = new ArrayList<Case>();
