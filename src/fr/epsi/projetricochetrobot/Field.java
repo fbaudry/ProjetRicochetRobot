@@ -1,17 +1,10 @@
 package fr.epsi.projetricochetrobot;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Field extends Window{
 	
@@ -22,8 +15,8 @@ public class Field extends Window{
 	
 	public int nbRound;
 	public boolean finished;
-	public Map<Integer, Case> cases;
-	public Case[] casefield;
+	//public HashMap<Integer, Case> cases = new HashMap<Integer, Case>();
+	public Case[] casefield = new Case[256];
 	
 	private Case starter = null;
 	private Case target = null;
@@ -46,6 +39,7 @@ public class Field extends Window{
 		
 		FileReader fr;
 	
+		//on initialise les cases
 		try {
 			System.setProperty( "file.encoding", "UTF-8" );
 			fr = new FileReader("./case.csv");
@@ -65,12 +59,61 @@ public class Field extends Window{
 						Boolean.parseBoolean(lineCases[4]),
 						Boolean.parseBoolean(lineCases[5]),
 						Boolean.parseBoolean(lineCases[6]),
-						new File("./img/" + lineCases[7] + ".png"),
 						false,
 						super.getGraphics());
 				
-				//this.casefield[i] = c;
+				//0->haut; 1->droite; 2->bas; 3->gauche				
+				c.setFile();
+				c.drawImage();
+				
 				//this.cases.put(i, c);
+				casefield[i]=c;
+			}
+			counter.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//on initialise les mures
+		try {
+			System.setProperty( "file.encoding", "UTF-8" );
+			fr = new FileReader("./walls.csv");
+			BufferedReader reader = new BufferedReader(fr);
+			LineNumberReader counter = new LineNumberReader(reader);
+			String line = null;
+			while ((line = counter.readLine()) != null) {    
+				String[] lineCases = line.split(",");
+				
+				if(Integer.parseInt(lineCases[0])+1 == Integer.parseInt(lineCases[1])){
+					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
+					c1.setWallRight();
+					c1.setFile();
+					c1.drawImage();
+					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
+					c2.setWallLeft();
+					c2.setFile();
+					c2.drawImage();
+				}else if(Integer.parseInt(lineCases[0])+16 == Integer.parseInt(lineCases[1])){
+					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
+					c1.setWallBottom();
+					c1.setFile();
+					c1.drawImage();
+					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
+					c2.setWallTop();
+					c2.setFile();
+					c2.drawImage();
+				}
 			}
 			counter.close();
 		} catch (FileNotFoundException e) {
