@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +25,7 @@ public class Field extends Window{
 	public boolean finished;
 	public Map<Integer, Case> cases;
 	public Case[] casefield;
+	public List<Case> resultWay;
 	
 	private Case starter = null;
 	private Case target = null;
@@ -122,5 +124,30 @@ public class Field extends Window{
 		starter = this.casefield[numberCaseStarter];
 		target = this.casefield[numberCaseTarget];
 	}
-
+	
+	public void findWay()
+	{
+		resultWay =  new ArrayList<Case>();
+		boolean foundTarget = false;
+		int i = starter.getCaseNumber();
+		int j;
+		// Nous plaçons un booléen à false afin d'arreter la boucle lorsque toute les fourmi aurons chercher
+		while(foundTarget != true)
+		{
+			Case choisedCase;
+			List<Case> voisines = this.casefield[i].getVoisines();
+			for(j=0;j<voisines.size();j++)
+			{
+				if(choisedCase == null ||choisedCase.getPheronomeLevel() <= voisines.get(j).getPheronomeLevel() && resultWay.contains(voisines.get(j)) == false)
+				{
+					choisedCase = voisines.get(j);
+					resultWay.add(choisedCase);
+					if(choisedCase == target)
+					{
+						foundTarget = true;
+					}
+				}
+			}
+		}
+	}
 }
