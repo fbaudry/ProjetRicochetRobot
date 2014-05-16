@@ -38,15 +38,15 @@ public class Case extends Panel{
 		return starter;
 	}
 
-	public void setStarter(boolean starter) {
-		this.starter = starter;
+	public void setStarter() {
+		this.starter = true;
 		Panel starterLayer = new Panel(super.getGraphics(), super.getX(), super.getY());
 		starterLayer.setFile(new File("./img/start_layer.png"));
 		starterLayer.drawImage();
 	}
 
-	public void setTarget(boolean target) {
-		this.target = target;
+	public void setTarget() {
+		this.target = true;
 		Panel starterLayer = new Panel(super.getGraphics(), super.getX(), super.getY());
 		starterLayer.setFile(new File("./img/end_layer.png"));
 		starterLayer.drawImage();
@@ -64,6 +64,8 @@ public class Case extends Panel{
 		this.walls[1] = right;
 		this.walls[2] = bottom;
 		this.walls[3] = left;
+		this.setFile(new File("./img/floor.png"));
+		this.drawImage();
 	}
 	
 	

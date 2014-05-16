@@ -8,8 +8,6 @@ import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Field extends Window{
 	
@@ -75,6 +73,16 @@ public class Field extends Window{
 				c.setFile();
 				c.drawImage();
 				
+				if(Boolean.parseBoolean(lineCases[7])){
+					c.setStarter();
+					starter=c;
+				}
+				
+				if(Boolean.parseBoolean(lineCases[8])){
+					c.setTarget();
+					target=c;
+				}
+				
 				//this.cases.put(i, c);
 				casefield[i]=c;
 			}
@@ -85,13 +93,6 @@ public class Field extends Window{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		
 		//on initialise les mures
@@ -132,8 +133,7 @@ public class Field extends Window{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		initStarterAndTarget();
+
 		runAnt();
 	}
 	
@@ -180,22 +180,6 @@ public class Field extends Window{
 	public boolean isFinished()
 	{
 		return this.finished;
-	}
-	
-	public void initStarterAndTarget()
-	{
-		int numberCaseStarter = (int)(Math.random() * (256));
-		
-		int numberCaseTarget = (int)(Math.random() * (256));
-		while(numberCaseTarget == numberCaseStarter)
-		{
-			numberCaseTarget = (int)(Math.random() * (256));
-		}
-		this.casefield[numberCaseStarter].setStarter(true);
-		this.casefield[numberCaseTarget].setTarget(true);
-		
-		starter = this.casefield[numberCaseStarter];
-		target = this.casefield[numberCaseTarget];
 	}
 	
 	public void findWay()
