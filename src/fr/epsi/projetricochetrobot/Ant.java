@@ -1,5 +1,6 @@
 package fr.epsi.projetricochetrobot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,15 +39,21 @@ public class Ant {
 					position= field.runStraight(direction, position);
 					if(position != null){
 						path.add(position);
+						position.setFile(new File("./img/path.png"));
+						position.drawImage();
 					}else {
+						voisines = field.getVoisines(this.getPosition(), path);
 						Case selectedCase = field.selectVoisine(voisines);
 						path.add(selectedCase);
+						selectedCase.setFile(new File("./img/path.png"));
+						selectedCase.drawImage();
 						
 						if(selectedCase == target){
 							pheromonize();
 							numMove = nbMoveLeft;
 							field.incrNbFoundWay();
 						}
+						selectedCase = null;
 					}
 				}
 			}

@@ -185,18 +185,12 @@ public class Field extends Window{
 	public Case runStraight(int direction, Case position)
 	{
 		try {
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		boolean isValidWay = true;
 		
-		Case selectedCase = position;
-		
-		selectedCase.setFile(new File("./img/path.png"));
-		selectedCase.drawImage();
-
 		if(position.getWall(direction) == false){
 			return getCaseByDirection(direction, position);
 		}
@@ -216,7 +210,7 @@ public class Field extends Window{
 			}
 			case 1: 
 			{
-				if(position.getCaseNumber()%16 != 0){
+				if(position.getCaseNumber()%16 != 15){
 					return this.casefield[position.getCaseNumber()-1];
 				}
 				
@@ -224,14 +218,14 @@ public class Field extends Window{
 			}
 			case 2:
 			{
-				if(position.getCaseNumber()%16 != 15){
-					return this.casefield[position.getCaseNumber()+1];
+				if(position.getCaseNumber()+16 < 256){
+					return this.casefield[position.getCaseNumber()+16];
 				}
 			}
 			case 3:
 			{
-				if(position.getCaseNumber()+16 < 256){
-					return this.casefield[position.getCaseNumber()+16];
+				if(position.getCaseNumber()%16 != 0){
+					return this.casefield[position.getCaseNumber()+1];
 				}
 				
 				return null;
@@ -293,8 +287,22 @@ public class Field extends Window{
 		int numCaseTop = position.getCaseNumber() - 16;
 		int numCaseBottom = position.getCaseNumber() + 16;
 		
+		if(position.getWall(0) == false && position.getCaseNumber() > 15){
+			voisines.add(this.casefield[numCaseLeft]);
+		}
 		
-		// Si la case actuelle à une case à sa gauche
+		if(position.getWall(1) == false && position.getCaseNumber()%16 != 15){
+			voisines.add(this.casefield[numCaseLeft]);
+		}
+		
+		if(position.getWall(2) == false && position.getCaseNumber()+16 < 256){
+			voisines.add(this.casefield[numCaseBottom]);
+		}
+		
+		if(position.getWall(3) == false && position.getCaseNumber()%16 != 0){
+			voisines.add(this.casefield[numCaseLeft]);
+		}
+		/*// Si la case actuelle à une case à sa gauche
 		// Si la case actuelle n'a pas de mur à sa gauche et que sa voisine de gauche n'a pas de mur à droite
 		// Si la case de gauche n'a pas déjà été parcourue
 		if(position.getCaseNumber()%16 != 0)
@@ -332,6 +340,8 @@ public class Field extends Window{
 				if(casefield[numCaseBottom].getWall(0) == false)
 					if(isKnownCase(casefield[numCaseBottom],way) == false)
 						voisines.add(casefield[numCaseBottom]);
+		
+		*/
 		
 		
 		return voisines;
