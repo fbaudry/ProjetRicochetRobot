@@ -10,7 +10,6 @@ public class Ant {
 	private Case target;
 	private Field field;
 	
-	private Case position;
 	
 	
 	public Ant(Case starter, Case target)
@@ -19,29 +18,35 @@ public class Ant {
 		this.path.add(starter);
 		this.target = target;
 		field = Field.getInstance();
-		position = starter;
 	}
 	
 	public void move()
 	{
 		for(int numMove = 0; numMove < nbMoveLeft; numMove++){
 						
-			List<Case> voisines = field.getVoisines(position, path);
+			List<Case> voisines = field.getVoisines(this.getPosition(), path);
 			
 			if(voisines == null || voisines.size() == 0){
 				numMove = nbMoveLeft;
 			}else{
-				//System.out.println("");
 				
-				Case selectedCase = field.selectVoisine(voisines);
-				path.add(selectedCase);
+				int direction = field.getRandomDirection();
+				Case position = this.getPosition();
 				
-				position = selectedCase;
-				
-				if(selectedCase == target){
-					pheromonize();
-					numMove = nbMoveLeft;
-					field.incrNbFoundWay();
+				while(position != null){
+					position = field.getCaseByDirection(direction, position);
+					if(position != null){
+						path.add(position);
+					}else {
+						Case selectedCase = field.selectVoisine(voisines);
+						path.add(selectedCase);
+						
+						if(selectedCase == target){
+							pheromonize();
+							numMove = nbMoveLeft;
+							field.incrNbFoundWay();
+						}
+					}
 				}
 			}
 		}
@@ -51,5 +56,9 @@ public class Ant {
 		for(int i = 0; i < path.size(); i++){
 			path.get(i).addPheromone();
 		}
+	}
+	
+	public Case getPosition(){
+		return path.get(path.size()-1);
 	}
 }

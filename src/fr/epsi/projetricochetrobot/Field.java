@@ -145,7 +145,6 @@ public class Field extends Window{
 		while(nbFoundWay < Constant.nbFoundWay){
 			Ant ant = new Ant(starter, target);
 			ant.move();
-			temp++;
 			evaporation();
 		}
 	}
@@ -183,6 +182,60 @@ public class Field extends Window{
 		return this.finished;
 	}
 	
+	public Case runStraight(int direction, Case position)
+	{
+		boolean isValidWay = true;
+		
+		Case selectedCase = position;
+
+		if(position.getWall(direction) == false){
+			return getCaseByDirection(direction, position);
+		}
+		
+		return null;
+	}
+	
+	public Case getCaseByDirection(int direction, Case position){
+		switch(direction){
+			case 0:
+			{
+				if(position.getCaseNumber()-16 > 0){
+					return this.casefield[position.getCaseNumber()-16];
+				}
+				
+				return null;
+			}
+			case 1: 
+			{
+				if(position.getCaseNumber()%16 != 0){
+					return this.casefield[position.getCaseNumber()-1];
+				}
+				
+				return null;
+			}
+			case 2:
+			{
+				if(position.getCaseNumber()%16 != 15){
+					return this.casefield[position.getCaseNumber()+1];
+				}
+			}
+			case 3:
+			{
+				if(position.getCaseNumber()+16 < 256){
+					return this.casefield[position.getCaseNumber()+16];
+				}
+				
+				return null;
+			}
+			default:
+				return null;
+		}
+	}
+	
+	public int getRandomDirection(){
+		return 0;
+	}
+	
 	public void findWay()
 	{
 		resultWay =  new ArrayList<Case>();
@@ -207,8 +260,6 @@ public class Field extends Window{
 				}
 			}
 		}
-		
-		System.out.println("");
 	}
 	
 	public void showRightWay(){
