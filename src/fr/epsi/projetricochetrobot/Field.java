@@ -243,14 +243,7 @@ public class Field extends Window{
 	}
 	
 	public int getRandomDirection(){
-		double rand = Math.random()%3;
-		if(rand>=0 && rand < 1){
-			return 0;
-		}else if(rand>=1 && rand < 2){
-			return 1;
-		}else{
-			return 2;
-		}
+		return (int)(Math.random()*3);
 	}
 	
 	public void findWay()
