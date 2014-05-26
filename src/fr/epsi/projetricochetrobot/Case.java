@@ -34,10 +34,6 @@ public class Case extends Panel{
 		this.pheronomeLevel = pheronomeLevel;
 	}
 
-	public boolean isStarter() {
-		return starter;
-	}
-
 	public void setStarter() {
 		this.starter = true;
 		Panel starterLayer = new Panel(super.getGraphics(), super.getX(), super.getY());

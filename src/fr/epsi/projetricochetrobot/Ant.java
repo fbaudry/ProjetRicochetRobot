@@ -7,7 +7,6 @@ public class Ant {
 	private List<Case> path;
 	private int nbMoveLeft = Constant.nbMove;
 	
-	private Case starter;
 	private Case target;
 	private Field field;
 	
@@ -18,7 +17,6 @@ public class Ant {
 	{
 		this.path = new ArrayList<Case>();
 		this.path.add(starter);
-		this.starter = starter;
 		this.target = target;
 		field = Field.getInstance();
 		position = starter;
@@ -30,9 +28,11 @@ public class Ant {
 						
 			List<Case> voisines = field.getVoisines(position, path);
 			
-			if(voisines == null || voisines.size() == 0)
+			if(voisines == null || voisines.size() == 0){
 				numMove = nbMoveLeft;
-			else {
+			}else{
+				//System.out.println("");
+				
 				Case selectedCase = field.selectVoisine(voisines);
 				path.add(selectedCase);
 				
@@ -42,7 +42,6 @@ public class Ant {
 					pheromonize();
 					numMove = nbMoveLeft;
 					field.incrNbFoundWay();
-					System.out.println("NB CHEMIN TROUVE : " + field.getNbFoundWay());
 				}
 			}
 		}

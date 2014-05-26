@@ -1,6 +1,7 @@
 package fr.epsi.projetricochetrobot;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -135,13 +136,13 @@ public class Field extends Window{
 		}
 
 		runAnt();
+		
+		findWay();
 	}
 	
 	public void runAnt(){
 		nbFoundWay = 0;
-		int temp = 0;
 		while(nbFoundWay < Constant.nbFoundWay){
-			System.out.println("NB FOUND WAY : " + nbFoundWay);
 			Ant ant = new Ant(starter, target);
 			ant.move();
 			temp++;
@@ -188,18 +189,26 @@ public class Field extends Window{
 		boolean foundTarget = false;
 		
 		int i = starter.getCaseNumber();
+		
 		while(foundTarget != true)
-		{
+		{	
+			//on récupère la list les case accessible
 			List<Case> voisines = this.getVoisines(casefield[i], resultWay);
+			
+			//on choisit une case sur laquelle aller
 			Case choisedCase = this.selectVoisine(voisines);
-			resultWay.add(choisedCase);
-			i = choisedCase.getCaseNumber();
-			if(choisedCase == target)
-				foundTarget = true;
+			
+			if(choisedCase!=null){
+				resultWay.add(choisedCase);
+				i = choisedCase.getCaseNumber();
+				if(choisedCase == target){
+					foundTarget = true;
+					showRightWay();
+				}
+			}
 		}
 		
-		showRightWay();
-		
+		System.out.println("");
 	}
 	
 	public void showRightWay(){
@@ -210,6 +219,8 @@ public class Field extends Window{
 		
 		for(int i = 0; i < resultWay.size(); i++){
 			System.out.println(resultWay.get(i).getCaseNumber());
+			resultWay.get(i).setFile(new File("./img/path.png"));
+			resultWay.get(i).drawImage();
 		}
 	}
 	
@@ -293,9 +304,10 @@ public class Field extends Window{
 		double rand = Math.random();
 		
 		double temp = 0;
+		
 		for(int i = 0; i < voisines.size(); i++){
 			double luck = (double)voisines.get(i).getPheronomeLevel()/totalPheromone;
-			if(rand >= temp && rand < (luck + temp)){
+			if(rand >= temp && rand < (luck + temp)){					
 				selection =  voisines.get(i);
 				break;
 			}else{
