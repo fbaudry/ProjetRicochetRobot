@@ -184,9 +184,8 @@ public class Field extends Window{
 	
 	public Case runStraight(int direction, Case position)
 	{
-		System.out.println("dede");
 		try {
-			Thread.sleep(5);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
