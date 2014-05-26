@@ -211,7 +211,7 @@ public class Field extends Window{
 			case 1: 
 			{
 				if(position.getCaseNumber()%16 != 15){
-					return this.casefield[position.getCaseNumber()-1];
+					return this.casefield[position.getCaseNumber()+1];
 				}
 				
 				return null;
@@ -225,7 +225,8 @@ public class Field extends Window{
 			case 3:
 			{
 				if(position.getCaseNumber()%16 != 0){
-					return this.casefield[position.getCaseNumber()+1];
+					
+					return this.casefield[position.getCaseNumber()-1];
 				}
 				
 				return null;
@@ -236,7 +237,7 @@ public class Field extends Window{
 	}
 	
 	public int getRandomDirection(){
-		return (int)(Math.random()*3);
+		return (int)(Math.random()*4);
 	}
 	
 	public void findWay()
