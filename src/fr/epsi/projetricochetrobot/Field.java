@@ -184,9 +184,19 @@ public class Field extends Window{
 	
 	public Case runStraight(int direction, Case position)
 	{
+		System.out.println("dede");
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		boolean isValidWay = true;
 		
 		Case selectedCase = position;
+		
+		selectedCase.setFile(new File("./img/path.png"));
+		selectedCase.drawImage();
 
 		if(position.getWall(direction) == false){
 			return getCaseByDirection(direction, position);
@@ -233,7 +243,14 @@ public class Field extends Window{
 	}
 	
 	public int getRandomDirection(){
-		return 0;
+		double rand = Math.random()%3;
+		if(rand>=0 && rand < 1){
+			return 0;
+		}else if(rand>=1 && rand < 2){
+			return 1;
+		}else{
+			return 2;
+		}
 	}
 	
 	public void findWay()

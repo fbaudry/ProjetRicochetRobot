@@ -34,7 +34,8 @@ public class Ant {
 				Case position = this.getPosition();
 				
 				while(position != null){
-					position = field.getCaseByDirection(direction, position);
+					//position = field.getCaseByDirection(direction, position);
+					position= field.runStraight(direction, position);
 					if(position != null){
 						path.add(position);
 					}else {
