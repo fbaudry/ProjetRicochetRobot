@@ -233,7 +233,7 @@ public class Field extends Window{
 	}
 	
 	public int getRandomDirection(){
-		return 0;
+		return (int)(Math.random()*3);
 	}
 	
 	public void findWay()
