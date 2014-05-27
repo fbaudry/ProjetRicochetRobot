@@ -75,9 +75,13 @@ public class Ant {
 						path.add(newCase);
 						newCase.setFile(new File("./img/path.png"));
 						newCase.drawImage();
-						newCase.removeAll();
 					}else {
 						bool = false;
+					}
+					
+					if(newCase == target){
+						i = nbMoveLeft;
+						field.incrNbFoundWay();
 					}
 				}
 			}else {
@@ -117,17 +121,9 @@ public class Ant {
 		}
 		
 		int direction = -1;
-		int nbTest = 0;
 		
-		while(!voisines.contains(direction)){
-			direction = field.getRandomDirection();
-			nbTest++;
-			if(nbTest == 1000){
-				System.out.println("aucune direction possible");
-				return -1;
-			}
-		}
-		
+		direction = field.getRandomDirection();
+			
 		return direction;
 	
 	}
