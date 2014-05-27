@@ -11,6 +11,7 @@ public class Case{
 	private Panel floorPanel;	//le panel qui affiche le sol
 	private Panel wallsPanel;	//le panel qui affiche les murs
 	private Panel markerPanel;	//le panel qui affiche le par exemple le starter ou la target
+	private Panel pathPanel;	//le panel qui affiche le chemin
 	private Panel pheronomePanel;	//le panel qui affiche le niveau de pheromone
 	
 	private boolean[] walls = {false, false, false, false};	//permet de définir quel coté est un mur ----> 0->haut; 1->droite; 2->bas; 3->gauche
@@ -30,8 +31,11 @@ public class Case{
 		
 		this.markerPanel = new Panel(g, x, y);
 		
+		this.pathPanel = new Panel(g, x, y);
+		this.pathPanel.setFile(new File("./img/path.png"));
+		
 		this.pheronomePanel = new Panel(g, x, y);
-		this.pheronomePanel.setFile(new File("./img/path.png"));
+		this.pheronomePanel.setFile(new File("./img/pheromones.png"));
 		
 		this.caseNumber = caseNumber;
 		this.walls[0] = top;
@@ -43,7 +47,7 @@ public class Case{
 	
 	//-----------------------Methodes
 	public void drawPath(){
-		this.pheronomePanel.drawImage();
+		this.pathPanel.drawImage();
 	}
 	
 	public void drawWalls(){
@@ -55,7 +59,13 @@ public class Case{
 	}
 	
 	public void drawMarker(){
-			this.markerPanel.drawImage();
+		this.markerPanel.drawImage();
+	}
+	
+	public void drawPheronome(){
+		if(this.pheronomeLevel>1){
+			this.pheronomePanel.drawImage();
+		}
 	}
 	
 	public int getPheronomeLevel() {

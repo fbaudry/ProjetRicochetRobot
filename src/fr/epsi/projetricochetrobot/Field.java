@@ -93,7 +93,7 @@ public class Field extends Window{
 		}
 		
 		try {
-			Thread.sleep(50);
+			Thread.sleep(25);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -146,7 +146,7 @@ public class Field extends Window{
 		while(nbFoundWay < Constant.nbFoundWay){
 			Ant ant = new Ant(starter, target);
 			ant.move();
-			evaporation();
+			//evaporation();
 		}
 	}
 	
@@ -398,6 +398,7 @@ public class Field extends Window{
 			if(casefield[i].isTarget() || casefield[i].isStarter()){
 				casefield[i].drawMarker();
 			}
+			casefield[i].drawPheronome();
 		}
 	}
 }

@@ -77,7 +77,7 @@ public class Ant {
 						i = nbMoveLeft;
 						field.incrNbFoundWay();
 						bool = false;
-						
+						this.pheromonize();
 						System.out.println("----------Cible trouvée!---------");
 					}
 				}
@@ -116,6 +116,13 @@ public class Ant {
 		}
 		
 		if(voisines.size()>0){
+			
+			//------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//-----------------------------mettre la roue biaisé ici ----------------------!!!!!!!!!!!!!!!!!!!!!!!!!
+			//------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			
 			return voisines.get(field.getRandomDirection(voisines.size()));
 		}else{
 			return -1;
@@ -123,9 +130,15 @@ public class Ant {
 	}
 	
 	public void pheromonize(){
-		for(int i = 0; i < path.size(); i++){
-			path.get(i).addPheromone();
+		for(int j=0; j<field.casefield.length; j++){
+			for(int i = 0; i < path.size(); i++){
+				if(field.casefield[j]==path.get(i)){
+					field.casefield[j].addPheromone();
+				}
+			}
 		}
+		
+		
 	}
 	
 	public Case getPosition(){

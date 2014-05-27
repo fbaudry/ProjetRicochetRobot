@@ -9,7 +9,7 @@ public class Constant {
 	
 	public static int minPheromone = 1;
 	
-	public static int maxPheromone = 100;
+	public static int maxPheromone = 1000;
 	
-	public static int tauxPheromone = 10;
+	public static int tauxPheromone = 100;
 }
