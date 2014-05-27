@@ -60,7 +60,7 @@ public class Ant {
 			direction = this.getAnotherDirection(this.getPosition());
 			
 			if(direction != -1){
-				showDirection(direction);
+				//showDirection(direction);
 				
 				boolean bool = true;
 				while(bool){
@@ -76,6 +76,9 @@ public class Ant {
 					if(newCase == target){
 						i = nbMoveLeft;
 						field.incrNbFoundWay();
+						bool = false;
+						
+						System.out.println("----------Cible trouvée!---------");
 					}
 				}
 			}else {

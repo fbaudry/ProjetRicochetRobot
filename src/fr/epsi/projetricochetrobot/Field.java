@@ -186,7 +186,7 @@ public class Field extends Window{
 	public Case runStraight(int direction, Case position)
 	{
 		try {
-			Thread.sleep(50);
+			Thread.sleep(25);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -270,7 +270,6 @@ public class Field extends Window{
 		System.out.println("Case de départ : " + starter.getCaseNumber());
 		System.out.println("Case d'arrivée : " + target.getCaseNumber());
 		System.out.println("-----------------");
-		
 	}
 	
 	public List<Case> getVoisines(Case position, List<Case> way)
@@ -347,7 +346,6 @@ public class Field extends Window{
 			if(position == way.get(i))
 				return true;
 		}
-		
 		return false;
 	}
 	
@@ -402,5 +400,4 @@ public class Field extends Window{
 			}
 		}
 	}
-	
 }
