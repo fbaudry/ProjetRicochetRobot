@@ -1,17 +1,13 @@
 package fr.epsi.projetricochetrobot;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Ant {
 	private List<Case> path;
 	private int nbMoveLeft = Constant.nbMove;
-	
 	private Case target;
 	private Field field;
-	
-	
 	
 	public Ant(Case starter, Case target)
 	{
@@ -64,8 +60,7 @@ public class Ant {
 			direction = this.getAnotherDirection(this.getPosition());
 			
 			if(direction != -1){
-				System.out.println("Nouvelle direction:" + direction);
-				System.out.println("--------------");
+				showDirection(direction);
 				
 				boolean bool = true;
 				while(bool){
@@ -73,8 +68,7 @@ public class Ant {
 					
 					if(newCase != null){
 						path.add(newCase);
-						newCase.setFile(new File("./img/path.png"));
-						newCase.drawImage();
+						newCase.drawPath();
 					}else {
 						bool = false;
 					}
@@ -86,20 +80,18 @@ public class Ant {
 				}
 			}else {
 				i = nbMoveLeft;
+				field.clear();
 			}
-			
 		}
 	}
 	
 	public int getAnotherDirection(Case position){
-		
 		List<Integer> voisines = new ArrayList<Integer>();
 		
 		if((position.getCaseNumber()-16) > 0){
 			if(!path.contains(field.casefield[position.getCaseNumber()-16])){
 				voisines.add(0);
 			}
-			
 		}
 		
 		if((position.getCaseNumber()%16) != 15){
@@ -120,27 +112,12 @@ public class Ant {
 			}
 		}
 		
-		int direction = -1;
-		
-		direction = field.getRandomDirection();
-			
-		return direction;
-	
+		if(voisines.size()>0){
+			return voisines.get(field.getRandomDirection(voisines.size()));
+		}else{
+			return -1;
+		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*-------------------------------------------------------------*/
-	
-	
-	
-	
 	
 	public void pheromonize(){
 		for(int i = 0; i < path.size(); i++){
@@ -150,5 +127,17 @@ public class Ant {
 	
 	public Case getPosition(){
 		return path.get(path.size()-1);
+	}
+	
+	public void showDirection(int direction){
+		switch (direction)
+		{
+			case 0: System.out.println("haut"); break;
+			case 1: System.out.println("droite"); break;
+			case 2: System.out.println("bas"); break;
+			case 3: System.out.println("gauche"); break;
+		}
+		
+		System.out.println();
 	}
 }

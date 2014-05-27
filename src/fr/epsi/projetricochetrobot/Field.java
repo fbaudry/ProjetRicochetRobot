@@ -1,7 +1,6 @@
 package fr.epsi.projetricochetrobot;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Field extends Window{
-	
-
 	private static final long serialVersionUID = 1L;
 
 	private static Field instance = null;
@@ -72,7 +69,8 @@ public class Field extends Window{
 				
 				//0->haut; 1->droite; 2->bas; 3->gauche				
 				c.setFile();
-				c.drawImage();
+				c.drawFloor();
+				c.drawWalls();
 				
 				if(Boolean.parseBoolean(lineCases[7])){
 					c.setStarter();
@@ -84,6 +82,8 @@ public class Field extends Window{
 					target=c;
 				}
 				
+				c.drawMarker();
+				
 				//this.cases.put(i, c);
 				casefield[i]=c;
 			}
@@ -94,6 +94,13 @@ public class Field extends Window{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		//on initialise les mures
@@ -110,20 +117,20 @@ public class Field extends Window{
 					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
 					c1.setWallRight();
 					c1.setFile();
-					c1.drawImage();
+					c1.drawWalls();
 					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
 					c2.setWallLeft();
 					c2.setFile();
-					c2.drawImage();
+					c2.drawWalls();
 				}else if(Integer.parseInt(lineCases[0])+16 == Integer.parseInt(lineCases[1])){
 					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
 					c1.setWallBottom();
 					c1.setFile();
-					c1.drawImage();
+					c1.drawWalls();
 					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
 					c2.setWallTop();
 					c2.setFile();
-					c2.drawImage();
+					c2.drawWalls();
 				}
 			}
 			counter.close();
@@ -134,10 +141,6 @@ public class Field extends Window{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		runAnt();
-		
-		findWay();
 	}
 	
 	public void runAnt(){
@@ -185,7 +188,7 @@ public class Field extends Window{
 	public Case runStraight(int direction, Case position)
 	{
 		try {
-			Thread.sleep(500);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,13 +202,13 @@ public class Field extends Window{
 	}
 	
 	public Case getCaseByDirection(int direction, Case position){
+		//0->haut; 1->droite; 2->bas; 3->gauche
 		switch(direction){
 			case 0:
 			{
 				if(position.getCaseNumber()-16 > 0){
 					return this.casefield[position.getCaseNumber()-16];
 				}
-				
 				return null;
 			}
 			case 1: 
@@ -213,7 +216,6 @@ public class Field extends Window{
 				if(position.getCaseNumber()%16 != 15){
 					return this.casefield[position.getCaseNumber()+1];
 				}
-				
 				return null;
 			}
 			case 2:
@@ -221,14 +223,13 @@ public class Field extends Window{
 				if(position.getCaseNumber()+16 < 256){
 					return this.casefield[position.getCaseNumber()+16];
 				}
+				return null;
 			}
 			case 3:
 			{
 				if(position.getCaseNumber()%16 != 0){
-					
 					return this.casefield[position.getCaseNumber()-1];
 				}
-				
 				return null;
 			}
 			default:
@@ -236,8 +237,8 @@ public class Field extends Window{
 		}
 	}
 	
-	public int getRandomDirection(){
-		return (int)(Math.random()*4);
+	public int getRandomDirection(int i){
+		return (int)(Math.random()*i);
 	}
 	
 	public void findWay()
@@ -272,11 +273,6 @@ public class Field extends Window{
 		System.out.println("Case d'arrivée : " + target.getCaseNumber());
 		System.out.println("-----------------");
 		
-		for(int i = 0; i < resultWay.size(); i++){
-			System.out.println(resultWay.get(i).getCaseNumber());
-			resultWay.get(i).setFile(new File("./img/path.png"));
-			resultWay.get(i).drawImage();
-		}
 	}
 	
 	public List<Case> getVoisines(Case position, List<Case> way)
@@ -396,6 +392,14 @@ public class Field extends Window{
 	public void evaporation(){
 		for(int i = 0; i < casefield.length; i++){
 			casefield[i].removePheromone();
+		}
+	}
+	
+	public void clear(){
+		for(int i=0; i<casefield.length; i++){
+			casefield[i].drawFloor();
+			casefield[i].drawMarker();
+			casefield[i].drawWalls();
 		}
 	}
 	

@@ -6,5 +6,7 @@ public class Main {
 
 		Field f = Field.getInstance();
 		f.init();
+		f.runAnt();
+		f.findWay();
 	}
 }
