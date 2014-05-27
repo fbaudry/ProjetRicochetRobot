@@ -1,6 +1,5 @@
 package fr.epsi.projetricochetrobot;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ public class Ant {
 	
 	private Case target;
 	private Field field;
-	
 	
 	
 	public Ant(Case starter, Case target)
@@ -73,8 +71,7 @@ public class Ant {
 					
 					if(newCase != null){
 						path.add(newCase);
-						newCase.setFile(new File("./img/path.png"));
-						newCase.drawImage();
+						newCase.drawPath();
 					}else {
 						bool = false;
 					}
@@ -87,7 +84,7 @@ public class Ant {
 			}else {
 				i = nbMoveLeft;
 			}
-			
+			//field.clear();
 		}
 	}
 	
@@ -127,14 +124,6 @@ public class Ant {
 		return direction;
 	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/*-------------------------------------------------------------*/
 	
