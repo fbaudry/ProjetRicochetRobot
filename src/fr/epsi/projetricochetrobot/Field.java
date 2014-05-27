@@ -69,8 +69,6 @@ public class Field extends Window{
 				
 				//0->haut; 1->droite; 2->bas; 3->gauche				
 				c.setFile();
-				c.drawFloor();
-				c.drawWalls();
 				
 				if(Boolean.parseBoolean(lineCases[7])){
 					c.setStarter();
@@ -81,8 +79,6 @@ public class Field extends Window{
 					c.setTarget();
 					target=c;
 				}
-				
-				c.drawMarker();
 				
 				//this.cases.put(i, c);
 				casefield[i]=c;
@@ -97,7 +93,7 @@ public class Field extends Window{
 		}
 		
 		try {
-			Thread.sleep(100);
+			Thread.sleep(50);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -141,6 +137,8 @@ public class Field extends Window{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		clear();
 	}
 	
 	public void runAnt(){
@@ -398,8 +396,10 @@ public class Field extends Window{
 	public void clear(){
 		for(int i=0; i<casefield.length; i++){
 			casefield[i].drawFloor();
-			casefield[i].drawMarker();
 			casefield[i].drawWalls();
+			if(casefield[i].isTarget() || casefield[i].isStarter()){
+				casefield[i].drawMarker();
+			}
 		}
 	}
 	

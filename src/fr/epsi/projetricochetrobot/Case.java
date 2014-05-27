@@ -55,7 +55,6 @@ public class Case{
 	}
 	
 	public void drawMarker(){
-		if(this.starter || this.target)
 			this.markerPanel.drawImage();
 	}
 	
@@ -96,6 +95,10 @@ public class Case{
 		return target;
 	}
 	
+	public boolean isStarter() {
+		return starter;
+	}
+
 	public int getCaseNumber()
 	{
 		return caseNumber;

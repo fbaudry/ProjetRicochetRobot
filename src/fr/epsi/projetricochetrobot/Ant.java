@@ -80,9 +80,9 @@ public class Ant {
 				}
 			}else {
 				i = nbMoveLeft;
-				field.clear();
 			}
 		}
+		field.clear();
 	}
 	
 	public int getAnotherDirection(Case position){
