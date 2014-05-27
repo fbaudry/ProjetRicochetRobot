@@ -1,7 +1,6 @@
 package fr.epsi.projetricochetrobot;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -72,7 +71,7 @@ public class Field extends Window{
 				
 				//0->haut; 1->droite; 2->bas; 3->gauche				
 				c.setFile();
-				c.drawImage();
+				
 				
 				if(Boolean.parseBoolean(lineCases[7])){
 					c.setStarter();
@@ -83,7 +82,7 @@ public class Field extends Window{
 					c.setTarget();
 					target=c;
 				}
-				
+
 				//this.cases.put(i, c);
 				casefield[i]=c;
 			}
@@ -110,20 +109,16 @@ public class Field extends Window{
 					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
 					c1.setWallRight();
 					c1.setFile();
-					c1.drawImage();
 					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
 					c2.setWallLeft();
 					c2.setFile();
-					c2.drawImage();
 				}else if(Integer.parseInt(lineCases[0])+16 == Integer.parseInt(lineCases[1])){
 					Case c1 = this.casefield[Integer.parseInt(lineCases[0])];
 					c1.setWallBottom();
 					c1.setFile();
-					c1.drawImage();
 					Case c2 = this.casefield[Integer.parseInt(lineCases[1])];
 					c2.setWallTop();
 					c2.setFile();
-					c2.drawImage();
 				}
 			}
 			counter.close();
@@ -133,6 +128,12 @@ public class Field extends Window{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		for(int i=0; i<casefield.length; i++){
+			casefield[i].drawFloor();
+			casefield[i].drawMarker();
+			casefield[i].drawWalls();
 		}
 
 		runAnt();
@@ -185,12 +186,17 @@ public class Field extends Window{
 	public Case runStraight(int direction, Case position)
 	{
 		try {
-			Thread.sleep(500);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		boolean isValidWay = true;
 		
+		Case selectedCase = position;
+		
+		selectedCase.drawPath();
+
 		if(position.getWall(direction) == false){
 			return getCaseByDirection(direction, position);
 		}
@@ -212,23 +218,22 @@ public class Field extends Window{
 			}
 			case 1: 
 			{
-				if(position.getCaseNumber()%16 != 15){
-					return this.casefield[position.getCaseNumber()+1];
+				if(position.getCaseNumber()%16 != 0){
+					return this.casefield[position.getCaseNumber()-1];
 				}
 				
 				return null;
 			}
 			case 2:
 			{
-				if(position.getCaseNumber()+16 < 256){
-					return this.casefield[position.getCaseNumber()+16];
+				if(position.getCaseNumber()%16 != 15){
+					return this.casefield[position.getCaseNumber()+1];
 				}
 			}
 			case 3:
 			{
-				if(position.getCaseNumber()%16 != 0){
-					
-					return this.casefield[position.getCaseNumber()-1];
+				if(position.getCaseNumber()+16 < 256){
+					return this.casefield[position.getCaseNumber()+16];
 				}
 				
 				return null;
@@ -239,7 +244,7 @@ public class Field extends Window{
 	}
 	
 	public int getRandomDirection(){
-		return (int)(Math.random()*4);
+		return (int)(Math.random()*3);
 	}
 	
 	public void findWay()
@@ -276,8 +281,7 @@ public class Field extends Window{
 		
 		for(int i = 0; i < resultWay.size(); i++){
 			System.out.println(resultWay.get(i).getCaseNumber());
-			resultWay.get(i).setFile(new File("./img/path.png"));
-			resultWay.get(i).drawImage();
+			resultWay.get(i).drawPath();
 		}
 	}
 	
@@ -290,22 +294,8 @@ public class Field extends Window{
 		int numCaseTop = position.getCaseNumber() - 16;
 		int numCaseBottom = position.getCaseNumber() + 16;
 		
-		if(position.getWall(0) == false && position.getCaseNumber() > 15){
-			voisines.add(this.casefield[numCaseLeft]);
-		}
 		
-		if(position.getWall(1) == false && position.getCaseNumber()%16 != 15){
-			voisines.add(this.casefield[numCaseLeft]);
-		}
-		
-		if(position.getWall(2) == false && position.getCaseNumber()+16 < 256){
-			voisines.add(this.casefield[numCaseBottom]);
-		}
-		
-		if(position.getWall(3) == false && position.getCaseNumber()%16 != 0){
-			voisines.add(this.casefield[numCaseLeft]);
-		}
-		/*// Si la case actuelle à une case à sa gauche
+		// Si la case actuelle à une case à sa gauche
 		// Si la case actuelle n'a pas de mur à sa gauche et que sa voisine de gauche n'a pas de mur à droite
 		// Si la case de gauche n'a pas déjà été parcourue
 		if(position.getCaseNumber()%16 != 0)
@@ -343,8 +333,6 @@ public class Field extends Window{
 				if(casefield[numCaseBottom].getWall(0) == false)
 					if(isKnownCase(casefield[numCaseBottom],way) == false)
 						voisines.add(casefield[numCaseBottom]);
-		
-		*/
 		
 		
 		return voisines;
@@ -402,9 +390,10 @@ public class Field extends Window{
 	}
 	
 	public void clear(){
-		for(int i = 0; i < casefield.length; i++){
-			casefield[i].setFile();
-			casefield[i].drawImage();
+		for(int i=0; i<casefield.length; i++){
+			casefield[i].drawFloor();
+			casefield[i].drawMarker();
+			casefield[i].drawWalls();
 		}
 	}
 }

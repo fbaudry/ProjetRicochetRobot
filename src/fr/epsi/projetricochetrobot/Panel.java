@@ -20,20 +20,19 @@ public class Panel extends JPanel {
 
 	private File file;
 	private int x, y;
-	private Graphics g;
+	private Graphics graphics;
 	
-	//-------------------------contructeur
-	public Panel(Graphics g, int x, int y) {
+	public Panel(Graphics graphics, int x, int y) {
 		super();
-		this.g = g;
+		this.graphics = graphics;
 		this.x = x;
 		this.y = y;
 		this.file = new File("./img/floor.png");
 	}
 	
-	public Panel(Graphics g) {
+	public Panel(Graphics graphics) {
 		super();
-		this.g = g;
+		this.graphics = graphics;
 	}
 
 	public File getFile() {
@@ -62,13 +61,17 @@ public class Panel extends JPanel {
 	public void drawImage(){
 	    try {
 	    	Image img = ImageIO.read(file);
-	    	g.drawImage(img, this.x, this.y, this);
+	    	graphics.drawImage(img, this.x, this.y, this);
 	    } catch (IOException e) {
 	    	e.printStackTrace();
 	    }                
 	}
 
 	public Graphics getGraphics() {
-		return g;
+		return graphics;
+	}
+
+	public void setGraphics(Graphics graphics) {
+		this.graphics = graphics;
 	}
 }
