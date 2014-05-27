@@ -201,6 +201,8 @@ public class Field extends Window{
 			return getCaseByDirection(direction, position);
 		}
 		
+		this.clear();
+		
 		return null;
 	}
 	
@@ -388,4 +390,10 @@ public class Field extends Window{
 		}
 	}
 	
+	public void clear(){
+		for(int i = 0; i < casefield.length; i++){
+			casefield[i].setFile();
+			casefield[i].drawImage();
+		}
+	}
 }
